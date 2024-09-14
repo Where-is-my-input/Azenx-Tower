@@ -20,38 +20,43 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="Container"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Container"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 text = "Player"
 
-[node name="Button2" type="Button" parent="Container"]
+[node name="Button2" type="Button" parent="Container/HBoxContainer"]
+layout_mode = 2
+text = "Debug"
+
+[node name="Button3" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button3" type="Button" parent="Container"]
+[node name="Button4" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button4" type="Button" parent="Container"]
+[node name="Button5" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button5" type="Button" parent="Container"]
+[node name="Button6" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button6" type="Button" parent="Container"]
+[node name="Button7" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button7" type="Button" parent="Container"]
+[node name="Button8" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button8" type="Button" parent="Container"]
+[node name="Button9" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button9" type="Button" parent="Container"]
+[node name="Button10" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button10" type="Button" parent="Container"]
+[node name="Button11" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 
-[node name="Button11" type="Button" parent="Container"]
-layout_mode = 2
-
-[connection signal="pressed" from="Container/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Container/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Container/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
