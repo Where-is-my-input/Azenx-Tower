@@ -37,9 +37,12 @@ func _physics_process(delta):
 		velocity = Vector2(0,0)
 	if move_and_slide():
 		global_position = previousPosition
+		pass
 	else:
 		playAnimation(direction)
+		#if direction != Vector2(0,0) && !tmr_movement_cooldown.is_stopped(): Global.nextTurn.emit()
 	if snapped(pos, Vector2(1,1)) != snapped(global_position, Vector2(1,1)):
+		Global.nextTurn.emit()
 		pos = global_position
 		#audio_move.play()
 		#swap = false
@@ -58,3 +61,6 @@ func playAnimation(direction):
 			as_player.play("right")
 		Vector2(-1,0):
 			as_player.play("left")
+
+#func _on_tmr_movement_timeout() -> void:
+	#as_player.stop()

@@ -139,7 +139,9 @@ position = Vector2(0, -15)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_6g7i2")
 animation = &"up"
-frame_progress = 0.126505
+frame_progress = 0.248852
+
+[node name="Camera2D" type="Camera2D" parent="cb2Player"]
 
 [node name="tmrMovement" type="Timer" parent="."]
 one_shot = true

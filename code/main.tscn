@@ -58,5 +58,11 @@ layout_mode = 2
 [node name="Button11" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
 
+[node name="TextEdit" type="TextEdit" parent="Container/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
 [connection signal="pressed" from="Container/HBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Container/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Container/HBoxContainer/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="text_changed" from="Container/HBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]

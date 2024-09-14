@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3wkbrky7csoc"]
+
+[ext_resource type="Script" path="res://code/enemy/cb_enemy.gd" id="1_bw6ft"]
+[ext_resource type="Texture2D" uid="uid://cc73t3q5m0rnq" path="res://assets/sprites/mobs/chupa_cu.png" id="1_uk7ib"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8b82y"]
+size = Vector2(62, 62)
+
+[node name="enemy" type="Node2D"]
+
+[node name="cbEnemy" type="CharacterBody2D" parent="."]
+script = ExtResource("1_bw6ft")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="cbEnemy"]
+shape = SubResource("RectangleShape2D_8b82y")
+
+[node name="Sprite2D" type="Sprite2D" parent="cbEnemy"]
+scale = Vector2(0.0320481, 0.0320481)
+texture = ExtResource("1_uk7ib")
