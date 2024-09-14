@@ -10,20 +10,38 @@ var exitFailSafePos
 var spawnFailSafePos
 var turn = 0
 
+var playerSpawnPos
+
 func _ready() -> void:
 	Global.connect("spawnPlayer", playerSpawn)
 	Global.connect("spawnEnemy", spawnEnemy)
 	Global.connect("spawnExit", spawnExit)
-	Global.connect("floorGenerated", forceSpawn)
+	#Global.connect("floorGenerated", forceSpawn)
 	Global.connect("nextTurn", nextTurn)
+	Global.connect("floorGenerated", floorGenerated)
 	tile.generate()
+	#get_tree().paused = true
+
+func floorGenerated():
+	if playerSpawnPos == null && spawnFailSafePos == null: spawnFailSafePos = (Vector2(0,0) * Vector2(64, 64)) + Vector2(32, 32)
+	Global.player.get_child(0).global_position = playerSpawnPos if playerSpawnPos != null else spawnFailSafePos
+	print(Global.player.get_child(0).global_position)
+	Global.player.enterFloor()
+	add_child(Global.player)
+	forceSpawn()
 
 func playerSpawn(pos, forceSpawn = false):
 	spawnFailSafePos = pos
 	var rand = randf_range(0, 1)
 	if (playerSpawned || rand > 0.1) && !forceSpawn: return
-	spawn(PLAYER, pos)
-	print(pos)
+	#if Global.player == null && false:
+		#spawn(PLAYER, pos)
+	#else:
+	#Global.player.enterFloor((Vector2(pos) * Vector2(64, 64)) + Vector2(32, 32))
+	#Global.player.get_child(0).global_position = (Vector2(pos) * Vector2(64, 64)) + Vector2(32, 32)
+	playerSpawnPos = (Vector2(pos) * Vector2(64, 64)) + Vector2(32, 32)
+	#Global.player.enterFloor()
+	#add_child(Global.player)
 	playerSpawned = true
 
 func spawnEnemy(pos):
@@ -34,10 +52,11 @@ func spawnExit(pos, forceSpawn = false):
 	var rand = randf_range(0, 1)
 	if (exitSpawned || rand > 0.1) && !forceSpawn: return
 	exitSpawned = true
-	print(pos)
+	Global.setDoorCoordinates.emit(pos)
 	spawn(FLOOR_EXIT, pos)
 
 func spawn(node, pos):
+	if pos == null: pos = Vector2(0,0)
 	var spawnedNode = node.instantiate()
 	spawnedNode.global_position = (Vector2(pos) * Vector2(64, 64)) + Vector2(32, 32)
 	add_child(spawnedNode)

@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfofqdy6jgjoe"]
+
+[ext_resource type="Script" path="res://code/HUD/in_game_hud.gd" id="1_s7na8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nyr2i"]
+bg_color = Color(0.699036, 0, 0.0151044, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.901322, 0.80811, 0, 1)
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_suuvh"]
+bg_color = Color(0.297821, 0.70897, 5.77569e-07, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.628949, 0.887534, 0.457218, 1)
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="in_game_HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s7na8")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="topHUD" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 25.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/topHUD"]
+custom_minimum_size = Vector2(250, 25)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_nyr2i")
+theme_override_styles/fill = SubResource("StyleBoxFlat_suuvh")
+value = 50.0
+show_percentage = false
+
+[node name="doorCoordinates" type="Label" parent="CanvasLayer/topHUD"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Door:"

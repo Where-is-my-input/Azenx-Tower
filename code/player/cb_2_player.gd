@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@onready var animation_player: AnimationPlayer = $"../AnimationPlayer"
 
 const SPEED = 64.0
 const JUMP_VELOCITY = -400.0
@@ -21,6 +22,7 @@ func _ready():
 	weapon.global_position.x += 64
 	#Global.connect("topdownFinished", finished)
 	pos = global_position
+	Global.updateHUD.emit(self)
 
 func finished(value):
 	#set_script(null)
@@ -40,8 +42,12 @@ func _physics_process(delta):
 	else:
 		velocity = Vector2(0,0)
 	if move_and_slide():
-		global_position = previousPosition
-		pass
+		if !Global.godMode:
+			#if global_position == previousPosition:
+				#position.x += SPEED * 1
+				#position.y += SPEED * 1
+				#move_and_slide()
+			global_position = previousPosition
 	else:
 		playAnimation(direction)
 		if direction != Vector2(0,0): weapon.global_position = (direction * Vector2(64, 64)) + global_position
@@ -75,6 +81,13 @@ func _input(event: InputEvent) -> void:
 #func _on_tmr_movement_timeout() -> void:
 	#as_player.stop()
 func getHit(damage = 1):
-	hp -= damage
+	if !Global.godMode: hp -= damage
+	Global.updateHUD.emit(self)
+	animation_player.play("getHit")
 	if hp <= 0:
 		queue_free()
+
+func leaveFloor():
+	get_parent().process_mode = Node.PROCESS_MODE_DISABLED
+	get_parent().get_parent().remove_child(get_parent())
+	Global.player = get_parent()

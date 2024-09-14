@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bh2fb1qlrsyii"]
+[gd_scene load_steps=5 format=3 uid="uid://bh2fb1qlrsyii"]
 
 [ext_resource type="Texture2D" uid="uid://fc1xe2musrtl" path="res://assets/tilesets/tileset.png" id="1_6fdlu"]
+[ext_resource type="Script" path="res://code/tile_set/tile_set.gd" id="1_lu7qs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_on1h8"]
 texture = ExtResource("1_6fdlu")
@@ -78,6 +79,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_on1h8")
 
 [node name="tileSet" type="Node2D"]
+script = ExtResource("1_lu7qs")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_sx5t8")

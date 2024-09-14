@@ -1,5 +1,6 @@
 extends Node2D
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
+@onready var tile_set: Node2D = $tileSet
 
 @export var size = Vector2(50,50)
 @export var noiseOctaves = 1
@@ -23,6 +24,9 @@ func clear():
 
 func generate():
 	clear()
+	size = Vector2(randi_range(5,50), randi_range(5,50))
+	#size = Vector2(5,5)
+	tile_set.setBorder(size)
 	autoTile(0,0)
 	Global.floorGenerated.emit()
 	#tile_map_layer.tile_map_data.update_dirty_quadrants()

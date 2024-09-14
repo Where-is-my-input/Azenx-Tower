@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 const SPEED = 64
+@onready var animation_player: AnimationPlayer = $"../AnimationPlayer"
+@onready var spr_enemy: Sprite2D = $sprEnemy
 
 @export var hp = 25
 @export var atk = 1
@@ -16,6 +18,7 @@ func _ready() -> void:
 	Global.connect("nextTurn", playTurn)
 	pos = global_position
 	previousPosition = global_position
+	spr_enemy.visible = true
 
 func playTurn():
 	await get_tree().create_timer(0.07).timeout
@@ -46,6 +49,7 @@ func move(direction):
 
 func getHit(damage = 1):
 	hp -= damage
+	animation_player.play("getHit")
 	if hp <= 0:
 		queue_free()
 

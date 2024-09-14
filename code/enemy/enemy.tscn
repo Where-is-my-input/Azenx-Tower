@@ -1,13 +1,76 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3wkbrky7csoc"]
+[gd_scene load_steps=9 format=3 uid="uid://c3wkbrky7csoc"]
 
 [ext_resource type="Script" path="res://code/enemy/cb_enemy.gd" id="1_bw6ft"]
 [ext_resource type="Texture2D" uid="uid://cc73t3q5m0rnq" path="res://assets/sprites/mobs/chupa_cu.png" id="1_uk7ib"]
+[ext_resource type="Texture2D" uid="uid://bshnfbnvdeny2" path="res://assets/sprites/slash.png" id="3_1yt8w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8b82y"]
 size = Vector2(62, 62)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n75v2"]
 size = Vector2(96, 96)
+
+[sub_resource type="Animation" id="Animation_birvk"]
+resource_name = "getHit"
+length = 0.250002
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("cbEnemy/sprHit:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("cbEnemy/sprEnemy:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.0833333, 0.133333, 0.166667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_eewp8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("cbEnemy/sprHit:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("cbEnemy/sprEnemy:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4764v"]
+_data = {
+"RESET": SubResource("Animation_eewp8"),
+"getHit": SubResource("Animation_birvk")
+}
 
 [node name="enemy" type="Node2D"]
 
@@ -18,7 +81,8 @@ script = ExtResource("1_bw6ft")
 shape = SubResource("RectangleShape2D_8b82y")
 debug_color = Color(6.73831e-07, 0.643642, 0.296235, 0.42)
 
-[node name="Sprite2D" type="Sprite2D" parent="cbEnemy"]
+[node name="sprEnemy" type="Sprite2D" parent="cbEnemy"]
+visible = false
 scale = Vector2(0.0320481, 0.0320481)
 texture = ExtResource("1_uk7ib")
 
@@ -26,6 +90,16 @@ texture = ExtResource("1_uk7ib")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="cbEnemy/detection"]
 shape = SubResource("RectangleShape2D_n75v2")
+
+[node name="sprHit" type="Sprite2D" parent="cbEnemy"]
+visible = false
+scale = Vector2(0.186944, 0.186944)
+texture = ExtResource("3_1yt8w")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4764v")
+}
 
 [connection signal="body_entered" from="cbEnemy/detection" to="cbEnemy" method="_on_detection_body_entered"]
 [connection signal="body_exited" from="cbEnemy/detection" to="cbEnemy" method="_on_detection_body_exited"]
