@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://dpcxciy8f7egt"]
+[gd_scene load_steps=18 format=3 uid="uid://dpcxciy8f7egt"]
 
 [ext_resource type="Script" path="res://code/player/cb_2_player.gd" id="1_2deyc"]
+[ext_resource type="PackedScene" uid="uid://cbc48nnocleha" path="res://code/weapon/weapon.tscn" id="3_1aakv"]
 [ext_resource type="Texture2D" uid="uid://wc4yl75k2jap" path="res://assets/sprites/sprite_main2.png" id="3_gmpgg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yalc6"]
@@ -127,9 +128,10 @@ animations = [{
 
 [node name="player" type="Node2D"]
 
-[node name="cb2Player" type="CharacterBody2D" parent="."]
+[node name="cb2Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("weapon") groups=["Player"]]
 motion_mode = 1
 script = ExtResource("1_2deyc")
+weapon = NodePath("weapon")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="cb2Player"]
 shape = SubResource("RectangleShape2D_yalc6")
@@ -142,6 +144,8 @@ animation = &"up"
 frame_progress = 0.248852
 
 [node name="Camera2D" type="Camera2D" parent="cb2Player"]
+
+[node name="weapon" parent="cb2Player" instance=ExtResource("3_1aakv")]
 
 [node name="tmrMovement" type="Timer" parent="."]
 one_shot = true

@@ -17,7 +17,6 @@ var simplexNoise = FastNoiseLite.new()
 	#clear()
 	#generate()
 	#Global.floorGenerated.emit()
-	#print(min, " - ", max)
 
 func clear():
 	tile_map_layer.clear()
@@ -30,7 +29,6 @@ func generate():
 
 func autoTile(x, y):
 	var seed = str(Global.floor) + Global.seed
-	#print(seed, " - ", seed.hash())
 	simplexNoise.seed = seed.hash()
 	simplexNoise.fractal_octaves = noiseOctaves
 	simplexNoise.fractal_lacunarity = noiseLacunarity
@@ -48,7 +46,10 @@ func autoTile(x, y):
 			if noise < noiseThreshold:
 				tile_map_layer.set_cell(Vector2i(cx,cy), 0, Vector2i(1,0))
 				if noise > -0.8 && noise < -0.6:
-					#print(Vector2i(cx,cy), " - ", noise)
 					Global.spawnPlayer.emit(Vector2(cx, cy))
+				elif noise > -0.5 && noise < -0.4:
+					Global.spawnEnemy.emit(Vector2(cx, cy))
+				elif noise > -0.1 && noise < 0.0:
+					Global.spawnExit.emit(Vector2(cx, cy))
 			else:
 				tile_map_layer.set_cell(Vector2i(cx,cy), 0, Vector2i(0,0))

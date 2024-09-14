@@ -3,6 +3,8 @@ extends Node
 signal nextTurn
 signal floorGenerated
 signal spawnPlayer
+signal spawnEnemy
+signal spawnExit
 
 var seed = "ikkisoad"
 var floor = 0

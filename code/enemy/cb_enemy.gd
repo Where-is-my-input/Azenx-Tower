@@ -2,15 +2,31 @@ extends CharacterBody2D
 
 const SPEED = 64
 
+@export var hp = 25
+@export var atk = 1
+
 var pos
 var previousPosition
+
+var attackTurn = false
+
+var target = null
 
 func _ready() -> void:
 	Global.connect("nextTurn", playTurn)
 	pos = global_position
+	previousPosition = global_position
 
 func playTurn():
-	move(Vector2(randi_range(-1,1), randi_range(-1,1)))
+	await get_tree().create_timer(0.07).timeout
+	if attackTurn:
+		attack()
+	else:
+		move(Vector2(randi_range(-1,1), randi_range(-1,1)))
+
+func attack():
+	if target != null:
+		target.getHit(atk)
 
 func move(direction):
 	if direction:
@@ -27,3 +43,20 @@ func move(direction):
 		global_position = previousPosition
 	if snapped(pos, Vector2(1,1)) != snapped(global_position, Vector2(1,1)):
 		pos = global_position
+
+func getHit(damage = 1):
+	hp -= damage
+	if hp <= 0:
+		queue_free()
+
+
+func _on_detection_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Player"): 
+		attackTurn = true
+		target = body
+
+
+func _on_detection_body_exited(body: Node2D) -> void:
+	if body.is_in_group("Player"): 
+		attackTurn = false
+		target = null

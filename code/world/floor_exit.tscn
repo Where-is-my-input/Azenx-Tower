@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://brveyty5032lc"]
+
+[ext_resource type="Script" path="res://code/world/floor_exit.gd" id="1_ymutr"]
+[ext_resource type="Texture2D" uid="uid://btgafsadnb0qp" path="res://assets/sprites/door.png" id="2_ngihv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6pjve"]
+size = Vector2(50, 50)
+
+[node name="floor_exit" type="Node2D"]
+script = ExtResource("1_ymutr")
+
+[node name="a2dExit" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="a2dExit"]
+shape = SubResource("RectangleShape2D_6pjve")
+debug_color = Color(0.75933, 0.224415, 0.958206, 0.42)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.170732, 0.170732)
+texture = ExtResource("2_ngihv")
+
+[connection signal="body_entered" from="a2dExit" to="." method="_on_a_2d_exit_body_entered"]
