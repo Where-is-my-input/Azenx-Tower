@@ -1,3 +1,57 @@
-[gd_scene format=3 uid="uid://cklly8dtacfh8"]
+[gd_scene load_steps=2 format=3 uid="uid://cklly8dtacfh8"]
 
-[node name="main" type="Node2D"]
+[ext_resource type="Script" path="res://code/main.gd" id="1_63qwf"]
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_63qwf")
+
+[node name="Container" type="Container" parent="."]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="Container"]
+layout_mode = 2
+text = "Player"
+
+[node name="Button2" type="Button" parent="Container"]
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="Container"]
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="Container"]
+layout_mode = 2
+
+[node name="Button5" type="Button" parent="Container"]
+layout_mode = 2
+
+[node name="Button6" type="Button" parent="Container"]
+layout_mode = 2
+
+[node name="Button7" type="Button" parent="Container"]
+layout_mode = 2
+
+[node name="Button8" type="Button" parent="Container"]
+layout_mode = 2
+
+[node name="Button9" type="Button" parent="Container"]
+layout_mode = 2
+
+[node name="Button10" type="Button" parent="Container"]
+layout_mode = 2
+
+[node name="Button11" type="Button" parent="Container"]
+layout_mode = 2
+
+[connection signal="pressed" from="Container/Button" to="." method="_on_button_pressed"]
