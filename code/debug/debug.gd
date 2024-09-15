@@ -3,7 +3,10 @@ extends Node2D
 @export var tile:Node2D
 const FLOOR_EXIT = preload("res://code/world/floor_exit.tscn")
 const PLAYER = preload("res://code/player/player.tscn")
+
 const ENEMY = preload("res://code/enemy/enemy.tscn")
+const SPIRIT_WOLF = preload("res://code/enemy/spirit_wolf.tscn")
+
 var playerSpawned = false
 var exitSpawned = false
 var exitFailSafePos
@@ -45,7 +48,11 @@ func playerSpawn(pos, forceSpawn = false):
 	playerSpawned = true
 
 func spawnEnemy(pos):
-	spawn(ENEMY, pos)
+	match randi_range(0,1):
+		1:
+			spawn(SPIRIT_WOLF, pos)
+		_:
+			spawn(ENEMY, pos)
 
 func spawnExit(pos, forceSpawn = false):
 	exitFailSafePos = pos

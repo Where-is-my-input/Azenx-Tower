@@ -14,9 +14,12 @@ const JUMP_VELOCITY = -400.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
+var move = false
 var pos = global_position
 var previousPosition = global_position
+
+var direction = Vector2(0,0)
+var dirLooking = Vector2(0,-1)
 
 func _ready():
 	weapon.global_position.x += 64
@@ -29,18 +32,26 @@ func finished(value):
 	queue_free()
 
 func _physics_process(delta):
-	var direction = Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down"))
+	print(direction == dirLooking, " - ", tmr_movement_cooldown.is_stopped())
+	direction = Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down"))
 	if direction && tmr_movement_cooldown.is_stopped():
+		if direction == dirLooking:
+			move = true
+		else:
+			move = false
 		pos = global_position
 		previousPosition = global_position
 		
-		if direction.x != 0:
-			position.x += SPEED * direction.x
-		else:
-			position.y += SPEED * direction.y
-		tmr_movement_cooldown.start(0.15)
+		if move:
+			if direction.x != 0:
+				position.x += SPEED * direction.x
+			else:
+				position.y += SPEED * direction.y
+		tmr_movement_cooldown.start(0.25)
+		dirLooking = direction
 	else:
 		velocity = Vector2(0,0)
+	#if move:
 	if move_and_slide():
 		if !Global.godMode:
 			#if global_position == previousPosition:
@@ -54,6 +65,7 @@ func _physics_process(delta):
 		#if direction != Vector2(0,0) && !tmr_movement_cooldown.is_stopped(): Global.nextTurn.emit()
 	if snapped(pos, Vector2(1,1)) != snapped(global_position, Vector2(1,1)):
 		Global.nextTurn.emit()
+		#move = false
 		pos = global_position
 		#audio_move.play()
 		#swap = false

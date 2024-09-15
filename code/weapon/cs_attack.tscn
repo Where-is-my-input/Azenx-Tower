@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1irf1eylk16h"]
+
+[ext_resource type="Texture2D" uid="uid://siloux7j7kms" path="res://assets/sprites/sword.png" id="1_w3eng"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c14rp"]
+size = Vector2(64, 64)
+
+[node name="csAttack" type="CollisionShape2D"]
+shape = SubResource("RectangleShape2D_c14rp")
+disabled = true
+debug_color = Color(0.995457, 0, 0.204908, 0.42)
+
+[node name="sprAttackHitbox" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.176471)
+scale = Vector2(0.145401, 0.145401)
+texture = ExtResource("1_w3eng")

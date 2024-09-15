@@ -8,6 +8,7 @@ func _ready() -> void:
 	door_coordinates.visible = false
 
 func update(player):
+	if player == null: return
 	progress_bar.value = player.hp
 
 func setDoorCoordinates(v):
