@@ -7,10 +7,17 @@ signal spawnEnemy
 signal spawnExit
 signal setDoorCoordinates
 
+signal teleported
 signal updateHUD
+signal updateHUDLevel
+signal updateHUDxp
 
 var godMode = false
 
+enum gameMode { ARCADE, ENDLESS }
+enum enemyType { CHUPA_CU, SPIRIT_WOLF }
+
+var currentGameMode = gameMode.ARCADE
 var seed = "ikkisoad"
 var floor = 0
 
@@ -23,9 +30,30 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("reset"):
 		instantiatePlayer()
 		get_tree().change_scene_to_file("res://code/main.tscn")
+	elif event.is_action_pressed("primeTest"):
+		Global.floor += 1
+		#print(Global.floor, " - ", primeTest())
+		var xpNeeded:int = floor + ((25 + floor) * floor) + sqrt(floor)
+		#print(xpNeeded, " - xp", " level: ", floor)
+		var floorMobLevel:int = floor - (sqrt(floor) * 2) + floor - sqrt(floor) + 1 - sqrt(floor)
+		floorMobLevel = floor - sqrt(floor) * 2 + 2
+		print(floorMobLevel, " - ", floor)
+
+func primeTest():
+	var tester = 2
+	if Global.floor % tester == 0: return false
+	tester += 1
+	while tester <= sqrt(Global.floor):
+		if Global.floor % tester == 0:
+			return false
+		tester += 2
+	return true
 
 func changeFloor():
-	get_tree().change_scene_to_file("res://code/debug/debug.tscn")
+	if primeTest():
+		get_tree().change_scene_to_file("res://code/world/camp_fire.tscn")
+	else:
+		get_tree().change_scene_to_file("res://code/debug/debug.tscn")
 
 func instantiatePlayer():
 	player = PLAYER.instantiate()

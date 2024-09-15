@@ -6,6 +6,9 @@ const SPEED = 64
 
 @export var hp = 25
 @export var atk = 1
+@export var level:int = 1
+@export var enemyType:Global.enemyType = Global.enemyType.CHUPA_CU
+@export var xp = 10
 
 var pos
 var previousPosition
@@ -19,6 +22,13 @@ func _ready() -> void:
 	pos = global_position
 	previousPosition = global_position
 	spr_enemy.visible = true
+	#levelScale()
+
+func levelScale():
+	atk = atk + level
+	hp = hp + (level * 2)
+	xp = xp + sqrt(xp) * 2
+	#print("Level scalled to level: ", level, " HP: ", hp, " atk: ", atk)
 
 func playTurn():
 	await get_tree().create_timer(0.07).timeout
@@ -52,13 +62,13 @@ func getHit(damage = 1):
 	animation_player.play("getHit")
 	if hp <= 0:
 		queue_free()
-
+		return true
+	return false
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"): 
 		attackTurn = true
 		target = body
-
 
 func _on_detection_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"): 

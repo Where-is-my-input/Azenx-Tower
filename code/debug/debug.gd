@@ -28,7 +28,6 @@ func _ready() -> void:
 func floorGenerated():
 	if playerSpawnPos == null && spawnFailSafePos == null: spawnFailSafePos = (Vector2(0,0) * Vector2(64, 64)) + Vector2(32, 32)
 	Global.player.get_child(0).global_position = playerSpawnPos if playerSpawnPos != null else spawnFailSafePos
-	print(Global.player.get_child(0).global_position)
 	Global.player.enterFloor()
 	add_child(Global.player)
 	forceSpawn()
@@ -49,7 +48,7 @@ func playerSpawn(pos, forceSpawn = false):
 
 func spawnEnemy(pos):
 	match randi_range(0,1):
-		1:
+		Global.enemyType.SPIRIT_WOLF:
 			spawn(SPIRIT_WOLF, pos)
 		_:
 			spawn(ENEMY, pos)
@@ -66,6 +65,9 @@ func spawn(node, pos):
 	if pos == null: pos = Vector2(0,0)
 	var spawnedNode = node.instantiate()
 	spawnedNode.global_position = (Vector2(pos) * Vector2(64, 64)) + Vector2(32, 32)
+	if spawnedNode.get_child(0).is_in_group("Enemy"):
+		spawnedNode.get_child(0).level = Global.floor - sqrt(Global.floor) * 2 + 1
+		spawnedNode.get_child(0).levelScale()
 	add_child(spawnedNode)
 
 func forceSpawn():

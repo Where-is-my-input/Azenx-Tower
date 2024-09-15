@@ -5,3 +5,4 @@ func enterFloor():
 	#cb_2_player.global_position = pos
 	process_mode = Node.PROCESS_MODE_INHERIT
 	Global.updateHUD.emit(cb_2_player)
+	Global.updateHUDLevel.emit(cb_2_player)
