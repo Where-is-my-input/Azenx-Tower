@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3wkbrky7csoc"]
+[gd_scene load_steps=10 format=3 uid="uid://c3wkbrky7csoc"]
 
 [ext_resource type="Script" path="res://code/enemy/cb_enemy.gd" id="1_bw6ft"]
 [ext_resource type="Texture2D" uid="uid://cc73t3q5m0rnq" path="res://assets/sprites/mobs/chupa_cu.png" id="1_uk7ib"]
@@ -11,6 +11,8 @@ size = Vector2(62, 62)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n75v2"]
 resource_local_to_scene = true
 size = Vector2(96, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vlmja"]
 
 [sub_resource type="Animation" id="Animation_eewp8"]
 length = 0.001
@@ -88,9 +90,9 @@ visible = false
 scale = Vector2(0.0320481, 0.0320481)
 texture = ExtResource("1_uk7ib")
 
-[node name="detection" type="Area2D" parent="cbEnemy"]
+[node name="attack" type="Area2D" parent="cbEnemy"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="cbEnemy/detection"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="cbEnemy/attack"]
 shape = SubResource("RectangleShape2D_n75v2")
 
 [node name="sprHit" type="Sprite2D" parent="cbEnemy"]
@@ -98,10 +100,17 @@ visible = false
 scale = Vector2(0.186944, 0.186944)
 texture = ExtResource("3_1yt8w")
 
+[node name="detectPlayer" type="Area2D" parent="cbEnemy"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="cbEnemy/detectPlayer"]
+shape = SubResource("RectangleShape2D_vlmja")
+debug_color = Color(0.540187, 0.56748, 0, 0.42)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_4764v")
 }
 
-[connection signal="body_entered" from="cbEnemy/detection" to="cbEnemy" method="_on_detection_body_entered"]
-[connection signal="body_exited" from="cbEnemy/detection" to="cbEnemy" method="_on_detection_body_exited"]
+[connection signal="body_entered" from="cbEnemy/attack" to="cbEnemy" method="_on_detection_body_entered"]
+[connection signal="body_exited" from="cbEnemy/attack" to="cbEnemy" method="_on_detection_body_exited"]
+[connection signal="body_entered" from="cbEnemy/detectPlayer" to="cbEnemy" method="_on_detect_player_body_entered"]

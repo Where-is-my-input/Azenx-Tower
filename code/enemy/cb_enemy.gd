@@ -16,6 +16,7 @@ var previousPosition
 var attackTurn = false
 
 var target = null
+var goTo = null
 
 func _ready() -> void:
 	Global.connect("nextTurn", playTurn)
@@ -35,7 +36,8 @@ func playTurn():
 	if attackTurn:
 		attack()
 	else:
-		move(Vector2(randi_range(-1,1), randi_range(-1,1)))
+		var moveTo = Vector2(randi_range(-1,1), randi_range(-1,1))
+		move(moveTo)
 
 func attack():
 	if target != null:
@@ -74,3 +76,6 @@ func _on_detection_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"): 
 		attackTurn = false
 		target = null
+
+func _on_detect_player_body_entered(body: Node2D) -> void:
+	goTo = body

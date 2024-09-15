@@ -7,12 +7,12 @@
 resource_local_to_scene = true
 size = Vector2(62, 62)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsrok"]
-resource_local_to_scene = true
-size = Vector2(32, 96)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dqgtr"]
 size = Vector2(96, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5tpmn"]
+resource_local_to_scene = true
+size = Vector2(32, 96)
 
 [node name="spirit_wolf" instance=ExtResource("1_31m3u")]
 
@@ -26,8 +26,8 @@ shape = SubResource("RectangleShape2D_u840u")
 [node name="sprEnemy" parent="cbEnemy" index="1"]
 texture = ExtResource("2_yhqpl")
 
-[node name="CollisionShape2D" parent="cbEnemy/detection" index="0"]
-shape = SubResource("RectangleShape2D_jsrok")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="cbEnemy/detection" index="1"]
+[node name="cbEnemy_detection#CollisionShape2D2" type="CollisionShape2D" parent="cbEnemy/attack" index="0"]
 shape = SubResource("RectangleShape2D_dqgtr")
+
+[node name="CollisionShape2D" parent="cbEnemy/attack" index="1"]
+shape = SubResource("RectangleShape2D_5tpmn")
