@@ -1,7 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bh2fb1qlrsyii"]
+[gd_scene load_steps=6 format=3 uid="uid://bh2fb1qlrsyii"]
 
 [ext_resource type="Texture2D" uid="uid://fc1xe2musrtl" path="res://assets/tilesets/tileset.png" id="1_6fdlu"]
 [ext_resource type="Script" path="res://code/tile_set/tile_set.gd" id="1_lu7qs"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_bdydu"]
+vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)])
+agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_on1h8"]
 texture = ExtResource("1_6fdlu")
@@ -9,6 +15,7 @@ texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 1:0/0 = 0
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_bdydu")
 2:0/0 = 0
 3:0/0 = 0
 4:0/0 = 0
@@ -76,6 +83,7 @@ texture_region_size = Vector2i(64, 64)
 [sub_resource type="TileSet" id="TileSet_sx5t8"]
 tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_on1h8")
 
 [node name="tileSet" type="Node2D"]

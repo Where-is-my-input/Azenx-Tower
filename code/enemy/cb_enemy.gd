@@ -3,6 +3,7 @@ extends CharacterBody2D
 const SPEED = 64
 @onready var animation_player: AnimationPlayer = $"../AnimationPlayer"
 @onready var spr_enemy: Sprite2D = $sprEnemy
+@onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D
 
 @export var hp = 25
 @export var atk = 1
@@ -37,7 +38,23 @@ func playTurn():
 		attack()
 	else:
 		var moveTo = Vector2(randi_range(-1,1), randi_range(-1,1))
+		if goTo != null:
+			navigation_agent_2d.target_position = goTo.global_position
+			#print(navigation_agent_2d.get_next_path_position())
+			#print(to_local(navigation_agent_2d.get_next_path_position().normalized()))
+			var targetPosition = navigation_agent_2d.get_next_path_position()
+			var x
+			var y
+			moveTo = Vector2(evaluateCoordinate(targetPosition.x, global_position.x), evaluateCoordinate(targetPosition.y, global_position.y))
+			#moveTo = to_local(navigation_agent_2d.get_next_path_position().normalized())
 		move(moveTo)
+
+func evaluateCoordinate(t, v):
+	if t > v:
+		return 1
+	elif t < v:
+		return -1
+	return 0
 
 func attack():
 	if target != null:
@@ -56,6 +73,8 @@ func move(direction):
 		velocity = Vector2(0,0)
 	if move_and_slide():
 		global_position = previousPosition
+		if direction.x != 0:
+			move(Vector2(0, direction.y))
 	if snapped(pos, Vector2(1,1)) != snapped(global_position, Vector2(1,1)):
 		pos = global_position
 
@@ -78,4 +97,13 @@ func _on_detection_body_exited(body: Node2D) -> void:
 		target = null
 
 func _on_detect_player_body_entered(body: Node2D) -> void:
-	goTo = body
+	if body.is_in_group("Player"): 
+		goTo = body
+
+func _on_detect_player_body_exited(body: Node2D) -> void:
+	if body.is_in_group("Player"):
+		goTo = null
+
+
+func _on_navigation_agent_2d_target_reached() -> void:
+	goTo = null
