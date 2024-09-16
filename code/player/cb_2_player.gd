@@ -25,6 +25,7 @@ const JUMP_VELOCITY = -400.0
 var xp:int = 0
 var xpNeeded:int = level + ((25 + level) * level) + sqrt(level)
 var teleportCooldown = 0
+var teleportRange = 2
 var blockMovement = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -99,7 +100,7 @@ func _physics_process(delta):
 	else:
 		playAnimation(dirLooking)
 		if dirLooking:
-			aim.global_position = global_position + Vector2(128, 128) * dirLooking
+			aim.global_position = global_position + (Vector2(64, 64) * teleportRange ) * dirLooking
 			weapon.global_position = (dirLooking * Vector2(64, 64)) + global_position
 		#if direction != Vector2(0,0): weapon.global_position = (direction * Vector2(64, 64)) + global_position
 		#if direction != Vector2(0,0) && !tmr_movement_cooldown.is_stopped(): Global.nextTurn.emit()
@@ -125,35 +126,57 @@ func playAnimation(direction):
 		Vector2(-1,0):
 			as_player.play("left")
 
+func testOutsideBoundaries():
+	if position.x > camera_2d.limit_right || position.x < camera_2d.limit_left || position.y > camera_2d.limit_bottom || position.y < camera_2d.limit_top:
+		return true
+	return false
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack") && tmr_movement_cooldown.is_stopped() && !blockMovement:
 		weapon.attack()
 		tmr_movement_cooldown.start(0.15)
 	elif event.is_action_pressed("teleport"):
-		if teleportCooldown <= 0:
+		var manaRequired:int = (maxMana * 0.05) * (teleportRange - 1)
+		if teleportCooldown <= 0 && mana >= manaRequired:
 			previousPosition = global_position
-			position += dirLooking * (SPEED * 2)
-			if move_and_slide():
+			position += dirLooking * (SPEED * teleportRange)
+			if move_and_slide() || testOutsideBoundaries():
 				Global.manaLog.emit("Path obstructed")
 				global_position = previousPosition
 			else:
 				Global.teleported.emit()
 				teleportCooldown = 5
+				mana -= manaRequired
+				teleportRange = 2
+				Global.updateHUD.emit(self)
 				tmr_movement_cooldown.start(0.25)
+		elif mana < manaRequired:
+			Global.manaLog.emit("Not enough mana")
+			Global.manaLog.emit(str(manaRequired) + " required")
 		else:
 			Global.manaLog.emit("Teleport is in cooldown")
 			Global.manaLog.emit(str(teleportCooldown) + " turns left")
 	elif event.is_action_pressed("spell") && !blockMovement:
-		if mana >= maxMana * 0.25:
+		var manaRequired:int = maxMana * 0.25
+		if mana >= manaRequired:
 			blockMovement = true
 			var usedSpell = spell.instantiate()
 			usedSpell.direction = dirLooking
 			usedSpell.manaDamage = mana
-			mana -= maxMana * 0.25
+			mana -= manaRequired
 			add_child(usedSpell)
 			Global.updateHUD.emit(self)
 		else:
 			Global.manaLog.emit("Not enough mana")
+			Global.manaLog.emit(str(manaRequired) + " required")
+	if event.is_action_pressed("tpRangeUp"):
+		teleportRange -= 1
+		if teleportRange < 2:
+			teleportRange = 2
+	elif event.is_action_pressed("tpRangeDown"):
+		teleportRange += 1
+		if teleportRange > 8 || mana < (maxMana * 0.05) * (teleportRange - 1):
+			teleportRange -= 1
 
 func spellFinished():
 	blockMovement = false
@@ -169,7 +192,7 @@ func getHit(damage = 1):
 	if hp <= 0:
 		hp = 0
 		dead.emit()
-		queue_free()
+		get_parent().dead()
 
 func leaveFloor():
 	get_parent().process_mode = Node.PROCESS_MODE_DISABLED

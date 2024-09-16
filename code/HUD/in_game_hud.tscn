@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfofqdy6jgjoe"]
+[gd_scene load_steps=10 format=3 uid="uid://cfofqdy6jgjoe"]
 
 [ext_resource type="Script" path="res://code/HUD/in_game_hud.gd" id="1_s7na8"]
 [ext_resource type="Texture2D" uid="uid://cdmy05j5lnhk3" path="res://assets/sprites/dashUpgrade.png" id="2_7takp"]
 [ext_resource type="StyleBox" uid="uid://d30p504o6g18j" path="res://code/HUD/in_game_hud.tres" id="2_yi6h1"]
 [ext_resource type="StyleBox" uid="uid://e0h5xy8wlvwl" path="res://code/HUD/in_game_hud2.tres" id="3_1mj26"]
+[ext_resource type="PackedScene" uid="uid://bgp0runia386e" path="res://code/HUD/hb_resource.tscn" id="5_uiim1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8xoo2"]
 bg_color = Color(0.342494, 0.401906, 0.516298, 1)
@@ -25,8 +26,14 @@ border_color = Color(1, 1, 1, 1)
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3nojn"]
+bg_color = Color(0.690196, 0.831373, 1, 0.443137)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cjgpi"]
 bg_color = Color(0, 0.21923, 0.552684, 1)
+border_width_left = 1
+border_width_right = 1
+border_width_bottom = 1
 
 [node name="in_game_HUD" type="Control"]
 layout_mode = 3
@@ -136,6 +143,14 @@ tint_under = Color(0.277528, 0.277528, 0.277528, 1)
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="pbXP" type="ProgressBar" parent="CanvasLayer/topLeftHUD"]
+custom_minimum_size = Vector2(250, 5)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_3nojn")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cjgpi")
+value = 50.0
+show_percentage = false
+
 [node name="hbLevel" type="HBoxContainer" parent="CanvasLayer/topLeftHUD"]
 layout_mode = 2
 alignment = 1
@@ -149,13 +164,6 @@ layout_mode = 2
 text = "1"
 horizontal_alignment = 1
 
-[node name="pbXP" type="ProgressBar" parent="CanvasLayer/topLeftHUD"]
-custom_minimum_size = Vector2(250, 5)
-layout_mode = 2
-theme_override_styles/fill = SubResource("StyleBoxFlat_cjgpi")
-value = 50.0
-show_percentage = false
-
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/topLeftHUD"]
 layout_mode = 2
 
@@ -166,6 +174,12 @@ text = "Atk: "
 [node name="lblCurrentAtk" type="Label" parent="CanvasLayer/topLeftHUD/HBoxContainer"]
 layout_mode = 2
 text = "1"
+
+[node name="hbWeapon" parent="CanvasLayer/topLeftHUD" instance=ExtResource("5_uiim1")]
+layout_mode = 2
+
+[node name="hbSpell" parent="CanvasLayer/topLeftHUD" instance=ExtResource("5_uiim1")]
+layout_mode = 2
 
 [node name="topRightHUD" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = 1

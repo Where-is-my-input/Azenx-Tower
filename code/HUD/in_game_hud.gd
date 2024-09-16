@@ -12,6 +12,8 @@ extends Control
 const LBL_LOG = preload("res://code/HUD/lbl_log.tscn")
 @onready var top_right_hud: VBoxContainer = $CanvasLayer/topRightHUD
 @onready var lbl_current_lvl: Label = $CanvasLayer/topLeftHUD/hbLevel/lblCurrentLvl
+@onready var hb_weapon: HBoxContainer = $CanvasLayer/topLeftHUD/hbWeapon
+@onready var hb_spell: HBoxContainer = $CanvasLayer/topLeftHUD/hbSpell
 
 func _ready() -> void:
 	Global.connect("updateHUD", update)
@@ -22,6 +24,7 @@ func _ready() -> void:
 	Global.connect("teleported", teleported)
 	Global.connect("damageLog", HUDlog)
 	Global.connect("manaLog", timedLog)
+	Global.connect("updateHUDResources", updateResources)
 	door_coordinates.visible = false
 	lbl_floor_number.text = str(Global.floor)
 
@@ -62,6 +65,11 @@ func update(player):
 	pb_mana.value = player.mana
 	lbl_mana.text = str(player.mana)
 	tp_teleport.value = 5 - player.teleportCooldown
+
+func updateResources(player):
+	hb_weapon.setResource(player.weapon.weaponName, player.weapon.atk)
+	var spell = player.spell.instantiate()
+	hb_spell.setResource(spell.spellName, spell.damage)
 
 func setDoorCoordinates(v):
 	door_coordinates.text = str(v)

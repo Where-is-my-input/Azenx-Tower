@@ -10,6 +10,7 @@ signal setDoorCoordinates
 signal teleported
 signal updateHUD
 signal updateHUDLevel
+signal updateHUDResources
 signal updateHUDxp
 signal limitCamera
 signal damageLog
@@ -18,7 +19,7 @@ signal manaLog
 var godMode = false
 
 enum gameMode { ARCADE, ENDLESS }
-enum enemyType { CHUPA_CU, SPIRIT_WOLF }
+enum enemyType { CHUPA_CU, SPIRIT_WOLF, GOBLIN }
 
 var currentGameMode = gameMode.ARCADE
 var seed = "ikkisoad"
@@ -26,8 +27,11 @@ var floor = 0
 
 var player:Node2D = null
 
-#func _ready() -> void:
-	#instantiatePlayer()
+func _ready() -> void:
+	instantiatePlayer()
+
+func healPlayer():
+	player.fullHeal()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("reset"):
@@ -61,4 +65,5 @@ func changeFloor():
 func instantiatePlayer():
 	#if player == null || player.is_empty(): 
 	player = PLAYER.instantiate()
-	#add_child(player)
+	add_child(player)
+	remove_child(player)

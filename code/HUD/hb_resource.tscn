@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgp0runia386e"]
+
+[ext_resource type="Script" path="res://code/HUD/hb_resource.gd" id="1_oif7w"]
+
+[node name="hbResource" type="HBoxContainer"]
+script = ExtResource("1_oif7w")
+
+[node name="lblName" type="Label" parent="."]
+layout_mode = 2
+
+[node name="lblAtk" type="Label" parent="."]
+layout_mode = 2

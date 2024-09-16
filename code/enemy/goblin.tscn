@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://orvbd257sfrn"]
+
+[ext_resource type="PackedScene" uid="uid://c3wkbrky7csoc" path="res://code/enemy/enemy.tscn" id="1_c1xqx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77cbf"]
+resource_local_to_scene = true
+size = Vector2(62, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_10vwp"]
+resource_local_to_scene = true
+size = Vector2(96, 96)
+
+[node name="goblin" instance=ExtResource("1_c1xqx")]
+
+[node name="cbEnemy" parent="." index="0"]
+enemyName = "Goblin"
+
+[node name="CollisionShape2D" parent="cbEnemy" index="0"]
+shape = SubResource("RectangleShape2D_77cbf")
+
+[node name="CollisionShape2D" parent="cbEnemy/attack" index="0"]
+shape = SubResource("RectangleShape2D_10vwp")
