@@ -1,26 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfofqdy6jgjoe"]
+[gd_scene load_steps=8 format=3 uid="uid://cfofqdy6jgjoe"]
 
 [ext_resource type="Script" path="res://code/HUD/in_game_hud.gd" id="1_s7na8"]
 [ext_resource type="Texture2D" uid="uid://cdmy05j5lnhk3" path="res://assets/sprites/dashUpgrade.png" id="2_7takp"]
+[ext_resource type="StyleBox" uid="uid://d30p504o6g18j" path="res://code/HUD/in_game_hud.tres" id="2_yi6h1"]
+[ext_resource type="StyleBox" uid="uid://e0h5xy8wlvwl" path="res://code/HUD/in_game_hud2.tres" id="3_1mj26"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nyr2i"]
-bg_color = Color(0.699036, 0, 0.0151044, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.901322, 0.80811, 0, 1)
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
-shadow_size = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_suuvh"]
-bg_color = Color(0.297821, 0.70897, 5.77569e-07, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8xoo2"]
+bg_color = Color(0.342494, 0.401906, 0.516298, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.628949, 0.887534, 0.457218, 1)
+border_color = Color(3.85046e-07, 0.572867, 0.623377, 1)
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u51yw"]
+bg_color = Color(9.62615e-08, 0.278899, 0.72904, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
@@ -38,18 +39,21 @@ script = ExtResource("1_s7na8")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="topHUD" type="HBoxContainer" parent="CanvasLayer"]
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 25.0
+[node name="topHUD" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -125.0
+offset_right = 125.0
+offset_bottom = 54.0
 grow_horizontal = 2
 alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/topHUD"]
 custom_minimum_size = Vector2(250, 25)
 layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_nyr2i")
-theme_override_styles/fill = SubResource("StyleBoxFlat_suuvh")
+theme_override_styles/background = ExtResource("2_yi6h1")
+theme_override_styles/fill = ExtResource("3_1mj26")
 value = 50.0
 show_percentage = false
 
@@ -62,9 +66,29 @@ text = "100"
 horizontal_alignment = 1
 
 [node name="doorCoordinates" type="Label" parent="CanvasLayer/topHUD"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Door:"
+
+[node name="pbMana" type="ProgressBar" parent="CanvasLayer/topHUD"]
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_8xoo2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_u51yw")
+value = 50.0
+show_percentage = false
+
+[node name="lblMana" type="Label" parent="CanvasLayer/topHUD/pbMana"]
+layout_mode = 0
+offset_left = 109.0
+offset_top = -12.0
+offset_right = 152.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 10
+text = "100
+"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="downHUD" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 2
@@ -112,9 +136,18 @@ tint_under = Color(0.277528, 0.277528, 0.277528, 1)
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="lblLevel" type="Label" parent="CanvasLayer/topLeftHUD"]
+[node name="hbLevel" type="HBoxContainer" parent="CanvasLayer/topLeftHUD"]
+layout_mode = 2
+alignment = 1
+
+[node name="lblLevel" type="Label" parent="CanvasLayer/topLeftHUD/hbLevel"]
 layout_mode = 2
 text = "Level: "
+
+[node name="lblCurrentLvl" type="Label" parent="CanvasLayer/topLeftHUD/hbLevel"]
+layout_mode = 2
+text = "1"
+horizontal_alignment = 1
 
 [node name="pbXP" type="ProgressBar" parent="CanvasLayer/topLeftHUD"]
 custom_minimum_size = Vector2(250, 5)
@@ -122,11 +155,6 @@ layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_cjgpi")
 value = 50.0
 show_percentage = false
-
-[node name="lblCurrentLvl" type="Label" parent="CanvasLayer/topLeftHUD"]
-layout_mode = 2
-text = "1"
-horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/topLeftHUD"]
 layout_mode = 2
@@ -138,3 +166,11 @@ text = "Atk: "
 [node name="lblCurrentAtk" type="Label" parent="CanvasLayer/topLeftHUD/HBoxContainer"]
 layout_mode = 2
 text = "1"
+
+[node name="topRightHUD" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0

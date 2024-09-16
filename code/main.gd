@@ -25,3 +25,7 @@ func _on_text_edit_text_changed() -> void:
 
 func _on_button_4_pressed() -> void:
 	get_tree().change_scene_to_file("res://code/world/camp_fire.tscn")
+
+
+func _on_button_5_pressed() -> void:
+	get_tree().change_scene_to_file("res://code/HUD/main_menu.tscn")

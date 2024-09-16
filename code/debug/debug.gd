@@ -3,6 +3,7 @@ extends Node2D
 @export var tile:Node2D
 const FLOOR_EXIT = preload("res://code/world/floor_exit.tscn")
 const PLAYER = preload("res://code/player/player.tscn")
+const FADE_OUT = preload("res://code/HUD/fade_out.tscn")
 
 const ENEMY = preload("res://code/enemy/enemy.tscn")
 const SPIRIT_WOLF = preload("res://code/enemy/spirit_wolf.tscn")
@@ -28,9 +29,14 @@ func _ready() -> void:
 func floorGenerated():
 	if playerSpawnPos == null && spawnFailSafePos == null: spawnFailSafePos = (Vector2(0,0) * Vector2(64, 64)) + Vector2(32, 32)
 	Global.player.get_child(0).global_position = playerSpawnPos if playerSpawnPos != null else spawnFailSafePos
+	print("Spawned position: ", Global.player.get_child(0).global_position)
+	Global.player.get_child(0).connect("dead", gameOver)
 	Global.player.enterFloor()
 	add_child(Global.player)
 	forceSpawn()
+
+func gameOver():
+	add_child(FADE_OUT.instantiate())
 
 func playerSpawn(pos, forceSpawn = false):
 	spawnFailSafePos = pos

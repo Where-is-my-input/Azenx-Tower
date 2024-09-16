@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
 @onready var animation_player: AnimationPlayer = $"../AnimationPlayer"
+@onready var camera_2d: Camera2D = $Camera2D
+@onready var aim: ColorRect = $aim
+
+signal dead
 
 const SPEED = 64.0
 const JUMP_VELOCITY = -400.0
@@ -9,15 +13,19 @@ const JUMP_VELOCITY = -400.0
 #@onready var audio_death: AudioStreamPlayer2D = $audioDeath
 @onready var as_player: AnimatedSprite2D = $asPlayer
 
+@export var spell:PackedScene
 @export var weapon:Node2D
-@export var hp = 25
-@export var maxHP = 25
-@export var level = 1
-@export var atk = 2
+@export var hp:int = 25
+@export var maxHP:int = 25
+@export var level:int = 1
+@export var atk:int = 2
+@export var mana:int = 50
+@export var maxMana:int = 50
 
-var xp = 0
+var xp:int = 0
 var xpNeeded:int = level + ((25 + level) * level) + sqrt(level)
 var teleportCooldown = 0
+var blockMovement = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -35,11 +43,22 @@ func _ready():
 	pos = global_position
 	Global.updateHUD.emit(self)
 	Global.connect("nextTurn", nextTurn)
+	Global.connect("limitCamera", limitCamera)
 	Global.updateHUDLevel.emit(self)
 	Global.updateHUDxp.emit(self)
 
+func limitCamera(limitLeft, limitRight, limitTop, limitBottom):
+	camera_2d.limit_left = limitLeft
+	camera_2d.limit_right = limitRight
+	camera_2d.limit_top = limitTop
+	camera_2d.limit_bottom = limitBottom
+	print("Set limit")
+
 func nextTurn():
 	teleportCooldown -= 1
+
+func passiveManaRegen():
+	regenMana(level + sqrt(level))
 
 func finished(value):
 	#set_script(null)
@@ -47,7 +66,7 @@ func finished(value):
 
 func _physics_process(delta):
 	direction = Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down"))
-	if direction && tmr_movement_cooldown.is_stopped():
+	if direction && tmr_movement_cooldown.is_stopped() && !blockMovement:
 		if direction == dirLooking:
 			move = true
 		else:
@@ -64,6 +83,8 @@ func _physics_process(delta):
 		dirLooking = direction
 	else:
 		velocity = Vector2(0,0)
+		if direction:
+			dirLooking = direction
 	#if move:
 	if move_and_slide():
 		if !Global.godMode:
@@ -71,10 +92,16 @@ func _physics_process(delta):
 				#position.x += SPEED * 1
 				#position.y += SPEED * 1
 				#move_and_slide()
-			global_position = previousPosition
+			if global_position != previousPosition: 
+				global_position = previousPosition
+				if move_and_slide():
+					global_position = Vector2(32, 32)
 	else:
-		playAnimation(direction)
-		if direction != Vector2(0,0): weapon.global_position = (direction * Vector2(64, 64)) + global_position
+		playAnimation(dirLooking)
+		if dirLooking:
+			aim.global_position = global_position + Vector2(128, 128) * dirLooking
+			weapon.global_position = (dirLooking * Vector2(64, 64)) + global_position
+		#if direction != Vector2(0,0): weapon.global_position = (direction * Vector2(64, 64)) + global_position
 		#if direction != Vector2(0,0) && !tmr_movement_cooldown.is_stopped(): Global.nextTurn.emit()
 	if snapped(pos, Vector2(1,1)) != snapped(global_position, Vector2(1,1)):
 		Global.nextTurn.emit()
@@ -99,26 +126,49 @@ func playAnimation(direction):
 			as_player.play("left")
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("attack"):
+	if event.is_action_pressed("attack") && tmr_movement_cooldown.is_stopped() && !blockMovement:
 		weapon.attack()
 		tmr_movement_cooldown.start(0.15)
-	elif event.is_action_pressed("teleport") && teleportCooldown <= 0:
-		previousPosition = global_position
-		position += dirLooking * (SPEED * 2)
-		if move_and_slide():
-			global_position = previousPosition
+	elif event.is_action_pressed("teleport"):
+		if teleportCooldown <= 0:
+			previousPosition = global_position
+			position += dirLooking * (SPEED * 2)
+			if move_and_slide():
+				Global.manaLog.emit("Path obstructed")
+				global_position = previousPosition
+			else:
+				Global.teleported.emit()
+				teleportCooldown = 5
+				tmr_movement_cooldown.start(0.25)
 		else:
-			Global.teleported.emit()
-			teleportCooldown = 5
-			tmr_movement_cooldown.start(0.25)
+			Global.manaLog.emit("Teleport is in cooldown")
+			Global.manaLog.emit(str(teleportCooldown) + " turns left")
+	elif event.is_action_pressed("spell") && !blockMovement:
+		if mana >= maxMana * 0.25:
+			blockMovement = true
+			var usedSpell = spell.instantiate()
+			usedSpell.direction = dirLooking
+			usedSpell.manaDamage = mana
+			mana -= maxMana * 0.25
+			add_child(usedSpell)
+			Global.updateHUD.emit(self)
+		else:
+			Global.manaLog.emit("Not enough mana")
+
+func spellFinished():
+	blockMovement = false
+	Global.nextTurn.emit()
 
 #func _on_tmr_movement_timeout() -> void:
 	#as_player.stop()
 func getHit(damage = 1):
 	if !Global.godMode: hp -= damage
+	Global.damageLog.emit("You were hit for " + str(damage) + " damage")
 	Global.updateHUD.emit(self)
 	animation_player.play("getHit")
 	if hp <= 0:
+		hp = 0
+		dead.emit()
 		queue_free()
 
 func leaveFloor():
@@ -126,14 +176,16 @@ func leaveFloor():
 	get_parent().get_parent().remove_child(get_parent())
 	Global.player = get_parent()
 
-func heal(v = 1):
+func heal(v:int = 1):
+	if hp < maxHP: Global.damageLog.emit("Healed for " + str(v) + " HP")
 	hp += v
 	Global.updateHUD.emit(self)
 	if hp > maxHP:
 		hp = maxHP
 
-func getXP(v = 1):
+func getXP(v:int = 1):
 	xp += v
+	Global.damageLog.emit("Gained " + str(v) + " XP")
 	Global.updateHUDxp.emit(self)
 	levelUp()
 
@@ -143,6 +195,7 @@ func calculateXpNeeded():
 func levelUp():
 	if xp >= xpNeeded:
 		level += 1
+		Global.damageLog.emit("Leveled up to level " + str(level))
 		xp -= xpNeeded
 		calculateXpNeeded()
 		scaleStats()
@@ -150,7 +203,16 @@ func levelUp():
 		Global.updateHUD.emit(self)
 		levelUp()
 
+func regenMana(v:int = 1):
+	if mana < maxMana:
+		Global.damageLog.emit(str(v) + " mana regenerated")
+	mana += v
+	if mana > maxMana:
+		mana = maxMana
+	Global.updateHUD.emit(self)
+
 func scaleStats():
 	maxHP = maxHP + level + 2
+	maxMana = maxMana + level + sqrt(level)
 	heal(maxHP / 2)
 	atk = atk + 1

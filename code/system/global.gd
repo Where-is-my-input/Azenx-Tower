@@ -11,6 +11,9 @@ signal teleported
 signal updateHUD
 signal updateHUDLevel
 signal updateHUDxp
+signal limitCamera
+signal damageLog
+signal manaLog
 
 var godMode = false
 
@@ -21,10 +24,10 @@ var currentGameMode = gameMode.ARCADE
 var seed = "ikkisoad"
 var floor = 0
 
-var player = null
+var player:Node2D = null
 
-func _ready() -> void:
-	instantiatePlayer()
+#func _ready() -> void:
+	#instantiatePlayer()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("reset"):
@@ -56,5 +59,6 @@ func changeFloor():
 		get_tree().change_scene_to_file("res://code/debug/debug.tscn")
 
 func instantiatePlayer():
+	#if player == null || player.is_empty(): 
 	player = PLAYER.instantiate()
 	#add_child(player)

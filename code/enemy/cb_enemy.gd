@@ -10,6 +10,7 @@ const SPEED = 64
 @export var level:int = 1
 @export var enemyType:Global.enemyType = Global.enemyType.CHUPA_CU
 @export var xp = 10
+@export var enemyName = "Zombie"
 
 var pos
 var previousPosition
@@ -46,6 +47,7 @@ func playTurn():
 			var x
 			var y
 			moveTo = Vector2(evaluateCoordinate(targetPosition.x, global_position.x), evaluateCoordinate(targetPosition.y, global_position.y))
+			print(moveTo)
 			#moveTo = to_local(navigation_agent_2d.get_next_path_position().normalized())
 		move(moveTo)
 
@@ -72,15 +74,18 @@ func move(direction):
 	else:
 		velocity = Vector2(0,0)
 	if move_and_slide():
+		if goTo != null: print("I collided: ", direction, " my position: ", global_position)
 		global_position = previousPosition
 		if direction.x != 0:
 			move(Vector2(0, direction.y))
+			global_position = snapped(global_position, Vector2(32, 32))
 	if snapped(pos, Vector2(1,1)) != snapped(global_position, Vector2(1,1)):
 		pos = global_position
 
 func getHit(damage = 1):
 	hp -= damage
 	animation_player.play("getHit")
+	Global.damageLog.emit(enemyName + " was hit for " + str(damage) + " damage")
 	if hp <= 0:
 		queue_free()
 		return true
@@ -103,7 +108,6 @@ func _on_detect_player_body_entered(body: Node2D) -> void:
 func _on_detect_player_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		goTo = null
-
 
 func _on_navigation_agent_2d_target_reached() -> void:
 	goTo = null

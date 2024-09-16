@@ -40,6 +40,7 @@ text = "CampFire"
 
 [node name="Button5" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
+text = "Main Menu"
 
 [node name="Button6" type="Button" parent="Container/HBoxContainer"]
 layout_mode = 2
@@ -67,4 +68,5 @@ layout_mode = 2
 [connection signal="pressed" from="Container/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="Container/HBoxContainer/Button3" to="." method="_on_button_3_pressed"]
 [connection signal="pressed" from="Container/HBoxContainer/Button4" to="." method="_on_button_4_pressed"]
+[connection signal="pressed" from="Container/HBoxContainer/Button5" to="." method="_on_button_5_pressed"]
 [connection signal="text_changed" from="Container/HBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]

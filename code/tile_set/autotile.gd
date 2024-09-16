@@ -25,9 +25,10 @@ func clear():
 func generate():
 	clear()
 	size = Vector2(randi_range(5,50), randi_range(5,50))
+	print("Map size: ", size)
 	#size = Vector2(5,5)
-	tile_set.setBorder(size)
 	autoTile(0,0)
+	tile_set.setBorder(size)
 	Global.floorGenerated.emit()
 	#tile_map_layer.tile_map_data.update_dirty_quadrants()
 
