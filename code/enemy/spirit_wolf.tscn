@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjrq5jrxiwxpi"]
+[gd_scene load_steps=9 format=3 uid="uid://bjrq5jrxiwxpi"]
 
 [ext_resource type="PackedScene" uid="uid://c3wkbrky7csoc" path="res://code/enemy/enemy.tscn" id="1_31m3u"]
 [ext_resource type="Texture2D" uid="uid://d3qebj6pg3vo" path="res://assets/sprites/mobs/GreatoDoggo.png" id="2_yhqpl"]
@@ -14,16 +14,20 @@ size = Vector2(96, 32)
 resource_local_to_scene = true
 size = Vector2(32, 96)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2g2fv"]
+resource_local_to_scene = true
+size = Vector2(320, 320)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_25shj"]
-size = Vector2(640, 64)
+size = Vector2(640, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d7nr4"]
-size = Vector2(64, 640)
+size = Vector2(128, 640)
 
 [node name="spirit_wolf" instance=ExtResource("1_31m3u")]
 
 [node name="cbEnemy" parent="." index="0"]
-hp = 5
+hp = 8
 enemyType = 1
 enemyName = "Spirit Wolf"
 
@@ -40,6 +44,7 @@ shape = SubResource("RectangleShape2D_dqgtr")
 shape = SubResource("RectangleShape2D_5tpmn")
 
 [node name="CollisionShape2D" parent="cbEnemy/detectPlayer" index="0"]
+shape = SubResource("RectangleShape2D_2g2fv")
 debug_color = Color(0.541176, 0.568627, 0, 0.313726)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="cbEnemy/detectPlayer" index="1"]

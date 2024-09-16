@@ -7,6 +7,7 @@ const FADE_OUT = preload("res://code/HUD/fade_out.tscn")
 
 const ENEMY = preload("res://code/enemy/enemy.tscn")
 const SPIRIT_WOLF = preload("res://code/enemy/spirit_wolf.tscn")
+const GOBLIN = preload("res://code/enemy/goblin.tscn")
 
 var playerSpawned = false
 var exitSpawned = false
@@ -53,9 +54,11 @@ func playerSpawn(pos, forceSpawn = false):
 	playerSpawned = true
 
 func spawnEnemy(pos):
-	match randi_range(0,1):
+	match randi_range(0,2):
 		Global.enemyType.SPIRIT_WOLF:
 			spawn(SPIRIT_WOLF, pos)
+		Global.enemyType.GOBLIN:
+			spawn(GOBLIN, pos)
 		_:
 			spawn(ENEMY, pos)
 

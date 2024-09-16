@@ -12,6 +12,8 @@ const SPEED = 64
 @export var xp = 10
 @export var enemyName = "Zombie"
 
+@export var spell:PackedScene
+
 var pos
 var previousPosition
 
@@ -47,7 +49,6 @@ func playTurn():
 			var x
 			var y
 			moveTo = Vector2(evaluateCoordinate(targetPosition.x, global_position.x), evaluateCoordinate(targetPosition.y, global_position.y))
-			print(moveTo)
 			#moveTo = to_local(navigation_agent_2d.get_next_path_position().normalized())
 		move(moveTo)
 
@@ -60,7 +61,14 @@ func evaluateCoordinate(t, v):
 
 func attack():
 	if target != null:
-		target.getHit(atk)
+		if enemyType == Global.enemyType.GOBLIN:
+			var newSpell = spell.instantiate()
+			#var x = 1 if target.global_position.x > global_position.x elif target.global_position.x > global_position.x -1 else 0
+			newSpell.direction = Vector2(evaluateCoordinate(target.global_position.x, global_position.x), evaluateCoordinate(target.global_position.y, global_position.y))
+			newSpell.damage = atk
+			add_child(newSpell)
+		else:
+			target.getHit(atk)
 
 func move(direction):
 	if direction:

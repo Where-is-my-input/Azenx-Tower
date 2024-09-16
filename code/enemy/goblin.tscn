@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://orvbd257sfrn"]
+[gd_scene load_steps=7 format=3 uid="uid://orvbd257sfrn"]
 
 [ext_resource type="PackedScene" uid="uid://c3wkbrky7csoc" path="res://code/enemy/enemy.tscn" id="1_c1xqx"]
+[ext_resource type="Texture2D" uid="uid://b01e403yehysc" path="res://assets/sprites/mobs/orc.png" id="2_05lbf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_77cbf"]
 resource_local_to_scene = true
@@ -8,15 +9,33 @@ size = Vector2(62, 62)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_10vwp"]
 resource_local_to_scene = true
-size = Vector2(96, 96)
+size = Vector2(640, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plggm"]
+size = Vector2(32, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xa8uj"]
+resource_local_to_scene = true
+size = Vector2(128, 128)
 
 [node name="goblin" instance=ExtResource("1_c1xqx")]
 
 [node name="cbEnemy" parent="." index="0"]
+hp = 6
+enemyType = 2
 enemyName = "Goblin"
 
 [node name="CollisionShape2D" parent="cbEnemy" index="0"]
 shape = SubResource("RectangleShape2D_77cbf")
 
+[node name="sprEnemy" parent="cbEnemy" index="1"]
+texture = ExtResource("2_05lbf")
+
 [node name="CollisionShape2D" parent="cbEnemy/attack" index="0"]
 shape = SubResource("RectangleShape2D_10vwp")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="cbEnemy/attack" index="1"]
+shape = SubResource("RectangleShape2D_plggm")
+
+[node name="CollisionShape2D" parent="cbEnemy/detectPlayer" index="0"]
+shape = SubResource("RectangleShape2D_xa8uj")

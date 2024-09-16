@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c3wkbrky7csoc"]
+[gd_scene load_steps=11 format=3 uid="uid://c3wkbrky7csoc"]
 
 [ext_resource type="Script" path="res://code/enemy/cb_enemy.gd" id="1_bw6ft"]
 [ext_resource type="Texture2D" uid="uid://cc73t3q5m0rnq" path="res://assets/sprites/mobs/chupa_cu.png" id="1_uk7ib"]
+[ext_resource type="PackedScene" uid="uid://c82gf0410xl2o" path="res://code/enemy/enemy_spell.tscn" id="2_khkdb"]
 [ext_resource type="Texture2D" uid="uid://bshnfbnvdeny2" path="res://assets/sprites/slash.png" id="3_1yt8w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8b82y"]
@@ -13,7 +14,8 @@ resource_local_to_scene = true
 size = Vector2(96, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlmja"]
-size = Vector2(256, 256)
+resource_local_to_scene = true
+size = Vector2(320, 320)
 
 [sub_resource type="Animation" id="Animation_eewp8"]
 length = 0.001
@@ -81,6 +83,8 @@ _data = {
 
 [node name="cbEnemy" type="CharacterBody2D" parent="." groups=["Enemy"]]
 script = ExtResource("1_bw6ft")
+hp = 15
+spell = ExtResource("2_khkdb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="cbEnemy"]
 shape = SubResource("RectangleShape2D_8b82y")
