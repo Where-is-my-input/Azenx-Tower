@@ -7,6 +7,10 @@ func enterFloor():
 	Global.updateHUD.emit(cb_2_player)
 	Global.updateHUDLevel.emit(cb_2_player)
 	Global.updateHUDResources.emit(cb_2_player)
+	if cb_2_player != null:
+		if cb_2_player.testOutsideBoundaries():
+			print("Player out of bounds")
+			cb_2_player.global_position = Vector2(32, 32)
 
 func dead():
 	get_parent().remove_child(self)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ccyai8h1rahon"]
 
 [ext_resource type="Script" path="res://code/HUD/main_menu.gd" id="1_qv7p6"]
-[ext_resource type="Texture2D" uid="uid://fo236cbmquq2" path="res://icon.svg" id="1_s2hry"]
+[ext_resource type="Texture2D" uid="uid://d3vtaiko0w7y1" path="res://assets/sprites/AzentTower.png" id="2_shwb0"]
 
 [node name="main_menu" type="Control"]
 layout_mode = 3
@@ -14,11 +14,12 @@ script = ExtResource("1_qv7p6")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 2
-offset_left = 512.0
-offset_top = 64.0
-offset_right = 1013.0
-offset_bottom = 288.0
-texture = ExtResource("1_s2hry")
+offset_left = 267.0
+offset_top = 32.0
+offset_right = 2187.0
+offset_bottom = 1112.0
+scale = Vector2(0.293256, 0.293256)
+texture = ExtResource("2_shwb0")
 stretch_mode = 2
 
 [node name="BoxContainer" type="BoxContainer" parent="."]
@@ -26,6 +27,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 224.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1

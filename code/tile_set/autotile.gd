@@ -25,14 +25,13 @@ func clear():
 func generate():
 	clear()
 	size = Vector2(randi_range(5,50), randi_range(5,50))
-	print("Map size: ", size)
 	#size = Vector2(5,5)
-	autoTile(0,0)
+	autoTile()
 	tile_set.setBorder(size)
 	Global.floorGenerated.emit()
 	#tile_map_layer.tile_map_data.update_dirty_quadrants()
 
-func autoTile(x, y):
+func autoTile():
 	var seed = str(Global.floor) + Global.seed
 	simplexNoise.seed = seed.hash()
 	simplexNoise.fractal_octaves = noiseOctaves
@@ -43,6 +42,7 @@ func autoTile(x, y):
 	
 	for cx in range(size.x):
 		for cy in range(size.y):
+			if Vector2(cx, cy) == Vector2(0,0): continue
 			var noise = simplexNoise.get_noise_2d(cx, cy)
 			#if noise < min:
 				#min = noise
@@ -56,5 +56,9 @@ func autoTile(x, y):
 					Global.spawnEnemy.emit(Vector2(cx, cy))
 				elif noise > -0.1 && noise < 0.0:
 					Global.spawnExit.emit(Vector2(cx, cy))
+				elif noise > 0.299:
+					#print("Spawn item")
+					Global.spawnItem.emit(Vector2(cx, cy))
 			else:
 				tile_map_layer.set_cell(Vector2i(cx,cy), 0, Vector2i(0,0))
+	#print("Min: ", min, "max: ", max)

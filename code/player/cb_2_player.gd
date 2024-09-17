@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var aim: ColorRect = $aim
 
 signal dead
+signal collectItem
 
 const SPEED = 64.0
 const JUMP_VELOCITY = -400.0
@@ -47,13 +48,15 @@ func _ready():
 	Global.connect("limitCamera", limitCamera)
 	Global.updateHUDLevel.emit(self)
 	Global.updateHUDxp.emit(self)
+	if testOutsideBoundaries():
+		print("Player out of bounds")
+		global_position = Vector2(32, 32)
 
 func limitCamera(limitLeft, limitRight, limitTop, limitBottom):
 	camera_2d.limit_left = limitLeft
 	camera_2d.limit_right = limitRight
 	camera_2d.limit_top = limitTop
 	camera_2d.limit_bottom = limitBottom
-	print("Set limit")
 
 func nextTurn():
 	teleportCooldown -= 1
@@ -102,6 +105,7 @@ func _physics_process(delta):
 		if dirLooking:
 			aim.global_position = global_position + (Vector2(64, 64) * teleportRange ) * dirLooking
 			weapon.global_position = (dirLooking * Vector2(64, 64)) + global_position
+			weapon.flip(dirLooking)
 		#if direction != Vector2(0,0): weapon.global_position = (direction * Vector2(64, 64)) + global_position
 		#if direction != Vector2(0,0) && !tmr_movement_cooldown.is_stopped(): Global.nextTurn.emit()
 	if snapped(pos, Vector2(1,1)) != snapped(global_position, Vector2(1,1)):
@@ -169,6 +173,8 @@ func _input(event: InputEvent) -> void:
 		else:
 			Global.manaLog.emit("Not enough mana")
 			Global.manaLog.emit(str(manaRequired) + " required")
+	elif event.is_action_pressed("collect"):
+		collectItem.emit()
 	if event.is_action_pressed("tpRangeUp"):
 		teleportRange -= 1
 		if teleportRange < 2:
@@ -239,3 +245,9 @@ func scaleStats():
 	maxMana = maxMana + level + sqrt(level)
 	heal(maxHP / 2)
 	atk = atk + 1
+
+func equipWeapon(w):
+	weapon.queue_free()
+	weapon = w
+	add_child(weapon)
+	Global.updateHUDResources.emit(self)

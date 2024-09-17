@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmai67pboveuv"]
+
+[ext_resource type="Script" path="res://code/item/item.gd" id="1_mondr"]
+[ext_resource type="Texture2D" uid="uid://crd7t3jv3j2t8" path="res://assets/sprites/items/axe.png" id="1_rv18i"]
+[ext_resource type="Texture2D" uid="uid://dtt2lnvxlgo7t" path="res://assets/sprites/items/sword.png" id="2_icy3x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wnasd"]
+size = Vector2(32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l734c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rv18i")
+}],
+"loop": true,
+"name": &"axe",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_icy3x")
+}],
+"loop": true,
+"name": &"sword",
+"speed": 5.0
+}]
+
+[node name="item" type="Node2D"]
+script = ExtResource("1_mondr")
+
+[node name="aItem" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="aItem"]
+shape = SubResource("RectangleShape2D_wnasd")
+debug_color = Color(0.713981, 0.258197, 1, 0.42)
+
+[node name="asItem" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.218115, 0.218115)
+sprite_frames = SubResource("SpriteFrames_l734c")
+animation = &"axe"
+
+[connection signal="body_entered" from="aItem" to="." method="_on_a_item_body_entered"]
+[connection signal="body_exited" from="aItem" to="." method="_on_a_item_body_exited"]

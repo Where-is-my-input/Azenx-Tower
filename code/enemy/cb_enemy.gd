@@ -33,7 +33,6 @@ func levelScale():
 	atk = atk + level
 	hp = hp + (level * 2)
 	xp = xp + sqrt(xp) * 2
-	#print("Level scalled to level: ", level, " HP: ", hp, " atk: ", atk)
 
 func playTurn():
 	await get_tree().create_timer(0.07).timeout
@@ -43,8 +42,6 @@ func playTurn():
 		var moveTo = Vector2(randi_range(-1,1), randi_range(-1,1))
 		if goTo != null:
 			navigation_agent_2d.target_position = goTo.global_position
-			#print(navigation_agent_2d.get_next_path_position())
-			#print(to_local(navigation_agent_2d.get_next_path_position().normalized()))
 			var targetPosition = navigation_agent_2d.get_next_path_position()
 			var x
 			var y
@@ -82,7 +79,6 @@ func move(direction):
 	else:
 		velocity = Vector2(0,0)
 	if move_and_slide():
-		if goTo != null: print("I collided: ", direction, " my position: ", global_position)
 		global_position = previousPosition
 		if direction.x != 0:
 			move(Vector2(0, direction.y))

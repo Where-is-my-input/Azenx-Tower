@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c82gf0410xl2o"]
 
 [ext_resource type="Script" path="res://code/enemy/enemy_spell.gd" id="1_eaio6"]
-[ext_resource type="Texture2D" uid="uid://bshnfbnvdeny2" path="res://assets/sprites/slash.png" id="2_mddhe"]
+[ext_resource type="Texture2D" uid="uid://q3gbk2ch1tm6" path="res://assets/sprites/fireball.png" id="2_go6xv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ea2s2"]
 size = Vector2(32, 32)
@@ -17,6 +17,6 @@ debug_color = Color(1, 0.00597473, 0.0573954, 0.42)
 
 [node name="sprSpell" type="Sprite2D" parent="hitbox"]
 scale = Vector2(0.0949555, 0.0949555)
-texture = ExtResource("2_mddhe")
+texture = ExtResource("2_go6xv")
 
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]

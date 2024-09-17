@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds81kf5xoy1a"]
+
+[ext_resource type="PackedScene" uid="uid://cbc48nnocleha" path="res://code/weapon/weapon.tscn" id="1_8333j"]
+[ext_resource type="PackedScene" uid="uid://d1irf1eylk16h" path="res://code/weapon/cs_attack.tscn" id="2_addeg"]
+
+[node name="sword" instance=ExtResource("1_8333j")]
+weaponName = "Sword"
+atk = 5
+
+[node name="csAttack2" parent="hitbox" index="1" instance=ExtResource("2_addeg")]
+position = Vector2(0, -64)
+
+[node name="csAttack3" parent="hitbox" index="2" instance=ExtResource("2_addeg")]
+position = Vector2(0, 64)
+
+[node name="csAttack4" parent="hitbox" index="3" instance=ExtResource("2_addeg")]
+position = Vector2(64, 64)
+
+[node name="csAttack5" parent="hitbox" index="4" instance=ExtResource("2_addeg")]
+position = Vector2(64, 0)
+
+[node name="csAttack6" parent="hitbox" index="5" instance=ExtResource("2_addeg")]
+position = Vector2(64, -64)

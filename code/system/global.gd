@@ -5,6 +5,7 @@ signal floorGenerated
 signal spawnPlayer
 signal spawnEnemy
 signal spawnExit
+signal spawnItem
 signal setDoorCoordinates
 
 signal teleported
@@ -20,6 +21,7 @@ var godMode = false
 
 enum gameMode { ARCADE, ENDLESS }
 enum enemyType { CHUPA_CU, SPIRIT_WOLF, GOBLIN }
+enum weaponType { AXE, SWORD }
 
 var currentGameMode = gameMode.ARCADE
 var seed = "ikkisoad"
@@ -39,9 +41,7 @@ func _input(event: InputEvent) -> void:
 		get_tree().change_scene_to_file("res://code/main.tscn")
 	elif event.is_action_pressed("primeTest"):
 		Global.floor += 1
-		#print(Global.floor, " - ", primeTest())
 		var xpNeeded:int = floor + ((25 + floor) * floor) + sqrt(floor)
-		#print(xpNeeded, " - xp", " level: ", floor)
 		var floorMobLevel:int = floor - (sqrt(floor) * 2) + floor - sqrt(floor) + 1 - sqrt(floor)
 		floorMobLevel = floor - sqrt(floor) * 2 + 2
 		print(floorMobLevel, " - ", floor)

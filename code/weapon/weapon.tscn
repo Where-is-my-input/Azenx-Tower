@@ -4,35 +4,29 @@
 [ext_resource type="PackedScene" uid="uid://d1irf1eylk16h" path="res://code/weapon/cs_attack.tscn" id="2_fv7u2"]
 
 [sub_resource type="Animation" id="Animation_vsyov"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("hitbox/csAttack:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
+length = 0.0666683
+step = 0.0166667
 
 [sub_resource type="Animation" id="Animation_4i2mw"]
 resource_name = "atk"
 length = 0.0666683
 step = 0.0166667
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("hitbox/csAttack:disabled")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667),
+"times": PackedFloat32Array(0, 0.05),
 "transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
+"values": [{
+"args": [false],
+"method": &"disableHitbox"
+}, {
+"args": [true],
+"method": &"disableHitbox"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i8uic"]
@@ -43,6 +37,8 @@ _data = {
 
 [node name="weapon" type="Node2D"]
 script = ExtResource("1_41b8g")
+weaponName = "Bare Hands"
+atk = 1
 
 [node name="hitbox" type="Area2D" parent="."]
 

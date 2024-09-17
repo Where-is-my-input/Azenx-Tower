@@ -9,6 +9,9 @@ const ENEMY = preload("res://code/enemy/enemy.tscn")
 const SPIRIT_WOLF = preload("res://code/enemy/spirit_wolf.tscn")
 const GOBLIN = preload("res://code/enemy/goblin.tscn")
 
+const SWORD = preload("res://code/item/sword.tscn")
+const AXE = preload("res://code/item/item.tscn")
+
 var playerSpawned = false
 var exitSpawned = false
 var exitFailSafePos
@@ -21,16 +24,25 @@ func _ready() -> void:
 	Global.connect("spawnPlayer", playerSpawn)
 	Global.connect("spawnEnemy", spawnEnemy)
 	Global.connect("spawnExit", spawnExit)
+	Global.connect("spawnItem", spawnItem)
 	#Global.connect("floorGenerated", forceSpawn)
 	Global.connect("nextTurn", nextTurn)
 	Global.connect("floorGenerated", floorGenerated)
 	tile.generate()
 	#get_tree().paused = true
 
+func spawnItem(pos):
+	match randi_range(0,2):
+		0:
+			spawn(SWORD, pos)
+			print("Sword")
+		1:
+			spawn(AXE, pos)
+			print("AXe")
+
 func floorGenerated():
 	if playerSpawnPos == null && spawnFailSafePos == null: spawnFailSafePos = (Vector2(0,0) * Vector2(64, 64)) + Vector2(32, 32)
 	Global.player.get_child(0).global_position = playerSpawnPos if playerSpawnPos != null else spawnFailSafePos
-	print("Spawned position: ", Global.player.get_child(0).global_position)
 	Global.player.get_child(0).connect("dead", gameOver)
 	Global.player.enterFloor()
 	add_child(Global.player)

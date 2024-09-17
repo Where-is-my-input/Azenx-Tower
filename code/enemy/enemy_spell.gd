@@ -4,6 +4,18 @@ extends Node2D
 @export var speed:Vector2 = Vector2(32, 32)
 @export var damage:int = 1
 @export var spellName = "Fireball"
+@onready var spr_spell: Sprite2D = $hitbox/sprSpell
+
+func _ready() -> void:
+	match direction:
+		Vector2(1,0):
+			spr_spell.rotation_degrees = 90
+		Vector2(-1,0):
+			spr_spell.rotation_degrees = -90
+		Vector2(0,-1):
+			spr_spell.rotation_degrees = 0
+		Vector2(0,1):
+			spr_spell.rotation_degrees = 180
 
 func _physics_process(delta: float) -> void:
 	global_position += direction * speed
