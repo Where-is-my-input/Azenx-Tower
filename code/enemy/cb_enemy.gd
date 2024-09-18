@@ -4,6 +4,7 @@ const SPEED = 64
 @onready var animation_player: AnimationPlayer = $"../AnimationPlayer"
 @onready var spr_enemy: Sprite2D = $sprEnemy
 @onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D
+@onready var pb_hp: ProgressBar = $pbHP
 
 @export var hp = 25
 @export var atk = 1
@@ -14,6 +15,7 @@ const SPEED = 64
 
 @export var spell:PackedScene
 
+var facing = 1
 var pos
 var previousPosition
 
@@ -23,6 +25,8 @@ var target = null
 var goTo = null
 
 func _ready() -> void:
+	pb_hp.max_value = hp
+	pb_hp.value = hp
 	Global.connect("nextTurn", playTurn)
 	pos = global_position
 	previousPosition = global_position
@@ -61,11 +65,18 @@ func attack():
 		if enemyType == Global.enemyType.GOBLIN:
 			var newSpell = spell.instantiate()
 			#var x = 1 if target.global_position.x > global_position.x elif target.global_position.x > global_position.x -1 else 0
-			newSpell.direction = Vector2(evaluateCoordinate(target.global_position.x, global_position.x), evaluateCoordinate(target.global_position.y, global_position.y))
+			var x = evaluateCoordinate(target.global_position.x, global_position.x)
+			if x != facing: flip(x)
+			newSpell.direction = Vector2(x, evaluateCoordinate(target.global_position.y, global_position.y))
 			newSpell.damage = atk
 			add_child(newSpell)
+			#newSpell.scale.x *= facing
 		else:
 			target.getHit(atk)
+
+func flip(v = -1):
+	spr_enemy.scale.x *= -1
+	facing = v
 
 func move(direction):
 	if direction:
@@ -73,6 +84,8 @@ func move(direction):
 		previousPosition = global_position
 		
 		if direction.x != 0:
+			if direction.x != facing:
+				flip(direction.x)
 			position.x += SPEED * direction.x
 		else:
 			position.y += SPEED * direction.y
@@ -88,7 +101,9 @@ func move(direction):
 
 func getHit(damage = 1):
 	hp -= damage
+	pb_hp.value = hp
 	animation_player.play("getHit")
+	Global.damageAnimLog.emit(0, damage, global_position)
 	Global.damageLog.emit(enemyName + " was hit for " + str(damage) + " damage")
 	if hp <= 0:
 		queue_free()

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://7tdgatrcy5qn"
+path="res://.godot/imported/ice.wav-e66fa93a427b544cbae531e2d429c704.sample"
+
+[deps]
+
+source_file="res://assets/sfx/RPG Voice Starter Pack/Type 2/ice.wav"
+dest_files=["res://.godot/imported/ice.wav-e66fa93a427b544cbae531e2d429c704.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

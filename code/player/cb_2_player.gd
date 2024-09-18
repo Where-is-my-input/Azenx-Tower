@@ -3,6 +3,8 @@ extends CharacterBody2D
 @onready var animation_player: AnimationPlayer = $"../AnimationPlayer"
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var aim: ColorRect = $aim
+@onready var asp_attack: AudioStreamPlayer2D = $aspAttack
+@onready var asp_spell: AudioStreamPlayer2D = $aspSpell
 
 signal dead
 signal collectItem
@@ -49,7 +51,6 @@ func _ready():
 	Global.updateHUDLevel.emit(self)
 	Global.updateHUDxp.emit(self)
 	if testOutsideBoundaries():
-		print("Player out of bounds")
 		global_position = Vector2(32, 32)
 
 func limitCamera(limitLeft, limitRight, limitTop, limitBottom):
@@ -138,8 +139,11 @@ func testOutsideBoundaries():
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack") && tmr_movement_cooldown.is_stopped() && !blockMovement:
 		weapon.attack()
+		asp_attack.play()
 		tmr_movement_cooldown.start(0.15)
 	elif event.is_action_pressed("teleport"):
+		if testOutsideBoundaries():
+			global_position = Vector2(32, 32)
 		var manaRequired:int = (maxMana * 0.05) * (teleportRange - 1)
 		if teleportCooldown <= 0 && mana >= manaRequired:
 			previousPosition = global_position
@@ -150,7 +154,7 @@ func _input(event: InputEvent) -> void:
 			else:
 				Global.teleported.emit()
 				teleportCooldown = 5
-				mana -= manaRequired
+				useMana(manaRequired)
 				teleportRange = 2
 				Global.updateHUD.emit(self)
 				tmr_movement_cooldown.start(0.25)
@@ -163,11 +167,12 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("spell") && !blockMovement:
 		var manaRequired:int = maxMana * 0.25
 		if mana >= manaRequired:
+			asp_spell.play()
 			blockMovement = true
 			var usedSpell = spell.instantiate()
 			usedSpell.direction = dirLooking
 			usedSpell.manaDamage = mana
-			mana -= manaRequired
+			useMana(manaRequired)
 			add_child(usedSpell)
 			Global.updateHUD.emit(self)
 		else:
@@ -193,6 +198,7 @@ func spellFinished():
 func getHit(damage = 1):
 	if !Global.godMode: hp -= damage
 	Global.damageLog.emit("You were hit for " + str(damage) + " damage")
+	Global.damageAnimLog.emit(0, damage, global_position)
 	Global.updateHUD.emit(self)
 	animation_player.play("getHit")
 	if hp <= 0:
@@ -206,7 +212,9 @@ func leaveFloor():
 	Global.player = get_parent()
 
 func heal(v:int = 1):
-	if hp < maxHP: Global.damageLog.emit("Healed for " + str(v) + " HP")
+	if hp < maxHP: 
+		Global.damageLog.emit("Healed for " + str(v) + " HP")
+		Global.damageAnimLog.emit(1, v, global_position)
 	hp += v
 	Global.updateHUD.emit(self)
 	if hp > maxHP:
@@ -216,6 +224,7 @@ func getXP(v:int = 1):
 	xp += v
 	Global.damageLog.emit("Gained " + str(v) + " XP")
 	Global.updateHUDxp.emit(self)
+	Global.damageAnimLog.emit(4, str(v) + " xp", global_position)
 	levelUp()
 
 func calculateXpNeeded():
@@ -225,6 +234,7 @@ func levelUp():
 	if xp >= xpNeeded:
 		level += 1
 		Global.damageLog.emit("Leveled up to level " + str(level))
+		Global.damageAnimLog.emit(2, "Level up!", global_position)
 		xp -= xpNeeded
 		calculateXpNeeded()
 		scaleStats()
@@ -232,9 +242,15 @@ func levelUp():
 		Global.updateHUD.emit(self)
 		levelUp()
 
+func useMana(v:int = 1):
+	mana -= v
+	Global.damageAnimLog.emit(3, -v, global_position)
+	Global.damageLog.emit(str(-v) + " mana used")
+
 func regenMana(v:int = 1):
 	if mana < maxMana:
 		Global.damageLog.emit(str(v) + " mana regenerated")
+		Global.damageAnimLog.emit(3, v, global_position)
 	mana += v
 	if mana > maxMana:
 		mana = maxMana

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://df7oa1ijvayid"]
+
+[ext_resource type="Script" path="res://code/system/asp_global.gd" id="1_amj70"]
+
+[node name="aspGlobal" type="AudioStreamPlayer"]
+bus = &"soundtrack"
+script = ExtResource("1_amj70")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -4,6 +4,7 @@ extends Node2D
 @onready var hitbox: Area2D = $hitbox
 @export var weaponName = "Axe"
 @export var atk:int = 5
+@onready var asp_weapon: AudioStreamPlayer2D = $aspWeapon
 
 var level:int = 1
 
@@ -18,6 +19,7 @@ func scaleLevel():
 		weaponName = "Legendary " + weaponName
 
 func attack():
+	asp_weapon.play()
 	animation_player.play("atk")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
@@ -26,6 +28,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func disableHitbox(v = true):
 	for c in hitbox.get_children():
 		c.set_deferred("disabled", v)
+		c.swipe()
 
 func _on_hitbox_body_entered(body) -> void:
 	if body.is_in_group("Enemy"):

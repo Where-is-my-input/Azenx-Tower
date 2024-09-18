@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddmo8fvsadupj"]
+
+[ext_resource type="Texture2D" uid="uid://fo236cbmquq2" path="res://icon.svg" id="1_i6mha"]
+[ext_resource type="Script" path="res://code/spell/bomb.gd" id="1_vry3d"]
+
+[node name="bomb" type="Node2D"]
+script = ExtResource("1_vry3d")
+
+[node name="sprBomb" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_i6mha")

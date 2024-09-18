@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://b674ljpjvwo23"]
+
+[ext_resource type="PackedScene" uid="uid://c3wkbrky7csoc" path="res://code/enemy/enemy.tscn" id="1_8gkno"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ry1wh"]
+resource_local_to_scene = true
+size = Vector2(62, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8q6yc"]
+resource_local_to_scene = true
+size = Vector2(96, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5t8sw"]
+resource_local_to_scene = true
+size = Vector2(320, 320)
+
+[node name="zombie" instance=ExtResource("1_8gkno")]
+
+[node name="CollisionShape2D" parent="cbEnemy" index="0"]
+shape = SubResource("RectangleShape2D_ry1wh")
+
+[node name="sprEnemy" parent="cbEnemy" index="1"]
+scale = Vector2(0.032, 0.032)
+
+[node name="CollisionShape2D" parent="cbEnemy/attack" index="0"]
+shape = SubResource("RectangleShape2D_8q6yc")
+
+[node name="CollisionShape2D" parent="cbEnemy/detectPlayer" index="0"]
+shape = SubResource("RectangleShape2D_5t8sw")

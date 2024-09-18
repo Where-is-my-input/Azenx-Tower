@@ -1,7 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbc48nnocleha"]
+[gd_scene load_steps=20 format=3 uid="uid://cbc48nnocleha"]
 
 [ext_resource type="Script" path="res://code/weapon/weapon.gd" id="1_41b8g"]
 [ext_resource type="PackedScene" uid="uid://d1irf1eylk16h" path="res://code/weapon/cs_attack.tscn" id="2_fv7u2"]
+[ext_resource type="AudioStream" uid="uid://ddcw3xxey6gxd" path="res://assets/swishes/swish-1.wav" id="3_h0kni"]
+[ext_resource type="AudioStream" uid="uid://cxdmc3rtyaxc5" path="res://assets/swishes/swish-2.wav" id="4_tqhqp"]
+[ext_resource type="AudioStream" uid="uid://coo8jq8nqjk5n" path="res://assets/swishes/swish-11.wav" id="5_clgfg"]
+[ext_resource type="AudioStream" uid="uid://b6i4drfyovb5r" path="res://assets/swishes/swish-12.wav" id="6_jshxc"]
+[ext_resource type="AudioStream" uid="uid://bqkjlxf1lsrdd" path="res://assets/swishes/swish-13.wav" id="7_3by5i"]
+[ext_resource type="AudioStream" uid="uid://dugjmjv7a553c" path="res://assets/swishes/swish-3.wav" id="8_5c6gu"]
+[ext_resource type="AudioStream" uid="uid://xqn5jp3ig3d7" path="res://assets/swishes/swish-4.wav" id="9_pvido"]
+[ext_resource type="AudioStream" uid="uid://dul1v2qj1dwlf" path="res://assets/swishes/swish-5.wav" id="10_y2vg2"]
+[ext_resource type="AudioStream" uid="uid://byviggkmc8mu6" path="res://assets/swishes/swish-6.wav" id="11_wsmx6"]
+[ext_resource type="AudioStream" uid="uid://dxn8e0vf1xgq1" path="res://assets/swishes/swish-7.wav" id="12_7atkn"]
+[ext_resource type="AudioStream" uid="uid://bdjun5le2taip" path="res://assets/swishes/swish-8.wav" id="13_2ewdm"]
+[ext_resource type="AudioStream" uid="uid://n67c440vhdkr" path="res://assets/swishes/swish-9.wav" id="14_opkco"]
+[ext_resource type="AudioStream" uid="uid://cawmdmyx5gxxh" path="res://assets/swishes/swish-10.wav" id="15_1vyc3"]
 
 [sub_resource type="Animation" id="Animation_vsyov"]
 length = 0.0666683
@@ -35,6 +48,22 @@ _data = {
 "atk": SubResource("Animation_4i2mw")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4jsfd"]
+streams_count = 13
+stream_0/stream = ExtResource("3_h0kni")
+stream_1/stream = ExtResource("4_tqhqp")
+stream_2/stream = ExtResource("8_5c6gu")
+stream_3/stream = ExtResource("9_pvido")
+stream_4/stream = ExtResource("10_y2vg2")
+stream_5/stream = ExtResource("11_wsmx6")
+stream_6/stream = ExtResource("12_7atkn")
+stream_7/stream = ExtResource("13_2ewdm")
+stream_8/stream = ExtResource("14_opkco")
+stream_9/stream = ExtResource("15_1vyc3")
+stream_10/stream = ExtResource("5_clgfg")
+stream_11/stream = ExtResource("6_jshxc")
+stream_12/stream = ExtResource("7_3by5i")
+
 [node name="weapon" type="Node2D"]
 script = ExtResource("1_41b8g")
 weaponName = "Bare Hands"
@@ -43,11 +72,16 @@ atk = 1
 [node name="hitbox" type="Area2D" parent="."]
 
 [node name="csAttack" parent="hitbox" instance=ExtResource("2_fv7u2")]
+rotation = 1.5708
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_i8uic")
 }
+
+[node name="aspWeapon" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_4jsfd")
+bus = &"sfx"
 
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -4,11 +4,13 @@ extends Node2D
 const FLOOR_EXIT = preload("res://code/world/floor_exit.tscn")
 const PLAYER = preload("res://code/player/player.tscn")
 const FADE_OUT = preload("res://code/HUD/fade_out.tscn")
+const LBL_ANIMATED_LOG = preload("res://code/HUD/lbl_animated_log.tscn")
 
-const ENEMY = preload("res://code/enemy/enemy.tscn")
+const ENEMY = preload("res://code/enemy/zombie.tscn")
 const SPIRIT_WOLF = preload("res://code/enemy/spirit_wolf.tscn")
 const GOBLIN = preload("res://code/enemy/goblin.tscn")
 
+const COLLECTIBLE = preload("res://code/item/collectible.tscn")
 const SWORD = preload("res://code/item/sword.tscn")
 const AXE = preload("res://code/item/item.tscn")
 
@@ -28,17 +30,25 @@ func _ready() -> void:
 	#Global.connect("floorGenerated", forceSpawn)
 	Global.connect("nextTurn", nextTurn)
 	Global.connect("floorGenerated", floorGenerated)
+	Global.connect("damageAnimLog", damageAnimLog)
 	tile.generate()
 	#get_tree().paused = true
 
+func damageAnimLog(type, value, pos):
+	var log = LBL_ANIMATED_LOG.instantiate()
+	log.get_child(0).setValues(type, value)
+	#log.type = type
+	add_child(log)
+	log.global_position = pos
+
 func spawnItem(pos):
-	match randi_range(0,2):
+	match randi_range(0,3):
 		0:
 			spawn(SWORD, pos)
-			print("Sword")
 		1:
 			spawn(AXE, pos)
-			print("AXe")
+		2:
+			spawn(COLLECTIBLE, pos)
 
 func floorGenerated():
 	if playerSpawnPos == null && spawnFailSafePos == null: spawnFailSafePos = (Vector2(0,0) * Vector2(64, 64)) + Vector2(32, 32)
@@ -66,6 +76,7 @@ func playerSpawn(pos, forceSpawn = false):
 	playerSpawned = true
 
 func spawnEnemy(pos):
+	if Global.floor < 25 && randi_range(1,4) == 4: return
 	match randi_range(0,2):
 		Global.enemyType.SPIRIT_WOLF:
 			spawn(SPIRIT_WOLF, pos)

@@ -4,7 +4,7 @@ var player = null
 @onready var tile_set: Node2D = $tileSet
 
 func _ready():
-	Global.player.get_child(0).global_position = Vector2(32,32) * 5
+	Global.player.get_child(0).global_position = Vector2(224,160)
 	add_child(Global.player)
 	Global.player.enterFloor()
 	tile_set.signalSize()

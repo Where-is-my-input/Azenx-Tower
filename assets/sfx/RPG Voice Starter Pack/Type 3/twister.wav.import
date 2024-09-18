@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bqqaeyu6rwofo"
+path="res://.godot/imported/twister.wav-50a3b5c172d1275bf1b89bc9cc97d63e.sample"
+
+[deps]
+
+source_file="res://assets/sfx/RPG Voice Starter Pack/Type 3/twister.wav"
+dest_files=["res://.godot/imported/twister.wav-50a3b5c172d1275bf1b89bc9cc97d63e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

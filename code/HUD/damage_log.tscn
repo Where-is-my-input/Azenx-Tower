@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfo2i7kq2up5i"]
+
+[ext_resource type="Script" path="res://code/HUD/damage_log.gd" id="1_mxhgw"]
+
+[node name="damage_log" type="Node2D"]
+script = ExtResource("1_mxhgw")

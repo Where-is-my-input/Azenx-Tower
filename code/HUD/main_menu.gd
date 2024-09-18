@@ -3,10 +3,14 @@ extends Control
 @onready var txt_seed: TextEdit = $BoxContainer/VBoxContainer/txtSeed
 
 func _ready() -> void:
+	Global.soundTrack.playMainMenu()
 	btn_arcade.grab_focus()
 	txt_seed.text = Global.seed
+	if Global.floor > Global.endlessFloor:
+		Global.endlessFloor = Global.floor
 
 func _on_btn_arcade_pressed() -> void:
+	Global.soundTrack.playRandom()
 	Global.currentGameMode = Global.gameMode.ARCADE
 	Global.floor = 0
 	Global.healPlayer()
@@ -14,8 +18,10 @@ func _on_btn_arcade_pressed() -> void:
 	get_tree().change_scene_to_file("res://code/debug/debug.tscn")
 
 func _on_btn_endless_pressed() -> void:
+	Global.soundTrack.playRandom()
 	Global.healPlayer()
 	Global.currentGameMode = Global.gameMode.ENDLESS
+	Global.floor = Global.endlessFloor
 	#Global.instantiatePlayer()
 	get_tree().change_scene_to_file("res://code/debug/debug.tscn")
 

@@ -10,10 +10,12 @@ config_version=5
 
 [application]
 
-config/name="GodotWildJam73"
+config/name="Azenx Tower"
 run/main_scene="res://code/HUD/main_menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="res://assets/sprites/wimiProductions.png"
+config/icon="res://assets/sprites/AzentTower.png"
 
 [autoload]
 

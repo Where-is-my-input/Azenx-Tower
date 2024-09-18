@@ -9,15 +9,20 @@ atk = 5
 
 [node name="csAttack2" parent="hitbox" index="1" instance=ExtResource("2_addeg")]
 position = Vector2(0, -64)
+rotation = 1.5708
 
 [node name="csAttack3" parent="hitbox" index="2" instance=ExtResource("2_addeg")]
 position = Vector2(0, 64)
+rotation = 1.5708
 
 [node name="csAttack4" parent="hitbox" index="3" instance=ExtResource("2_addeg")]
 position = Vector2(64, 64)
+rotation = 1.5708
 
 [node name="csAttack5" parent="hitbox" index="4" instance=ExtResource("2_addeg")]
 position = Vector2(64, 0)
+rotation = 1.5708
 
 [node name="csAttack6" parent="hitbox" index="5" instance=ExtResource("2_addeg")]
 position = Vector2(64, -64)
+rotation = 1.5708

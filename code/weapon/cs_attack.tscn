@@ -1,16 +1,117 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1irf1eylk16h"]
+[gd_scene load_steps=8 format=3 uid="uid://d1irf1eylk16h"]
 
 [ext_resource type="Texture2D" uid="uid://siloux7j7kms" path="res://assets/sprites/sword.png" id="1_w3eng"]
+[ext_resource type="Script" path="res://code/weapon/cs_attack.gd" id="1_yfi0i"]
+[ext_resource type="Texture2D" uid="uid://cj0ijgsy1de1v" path="res://assets/sprites/swipe.png" id="3_3jva5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c14rp"]
 size = Vector2(64, 64)
+
+[sub_resource type="Animation" id="Animation_8fwun"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprSwipe:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprSwipe:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(21, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sprSwipe:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.714815]
+}
+
+[sub_resource type="Animation" id="Animation_jgtag"]
+resource_name = "swipe"
+length = 0.0666683
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprSwipe:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprSwipe:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0166667, 0.0333333, 0.05),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(21, 0), Vector2(9, -2), Vector2(-3, -1), Vector2(-9, 5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sprSwipe:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0166667, 0.0333333, 0.05),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.714815, 0.598346, 0.200749, -0.435114]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_usw2x"]
+_data = {
+"RESET": SubResource("Animation_8fwun"),
+"swipe": SubResource("Animation_jgtag")
+}
 
 [node name="csAttack" type="CollisionShape2D"]
 shape = SubResource("RectangleShape2D_c14rp")
 disabled = true
 debug_color = Color(0.995457, 0, 0.204908, 0.42)
+script = ExtResource("1_yfi0i")
 
 [node name="sprAttackHitbox" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.176471)
 scale = Vector2(0.145401, 0.145401)
 texture = ExtResource("1_w3eng")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_usw2x")
+}
+
+[node name="sprSwipe" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0.654902, 0.760784)
+position = Vector2(21, 0)
+rotation = 0.714815
+scale = Vector2(0.106164, 0.106164)
+texture = ExtResource("3_3jva5")

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c82gf0410xl2o"]
+[gd_scene load_steps=5 format=3 uid="uid://c82gf0410xl2o"]
 
 [ext_resource type="Script" path="res://code/enemy/enemy_spell.gd" id="1_eaio6"]
 [ext_resource type="Texture2D" uid="uid://q3gbk2ch1tm6" path="res://assets/sprites/fireball.png" id="2_go6xv"]
+[ext_resource type="AudioStream" uid="uid://dvh28uehfprie" path="res://assets/sfx/foom_0.wav" id="3_asvkj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ea2s2"]
 size = Vector2(32, 32)
@@ -18,5 +19,9 @@ debug_color = Color(1, 0.00597473, 0.0573954, 0.42)
 [node name="sprSpell" type="Sprite2D" parent="hitbox"]
 scale = Vector2(0.0949555, 0.0949555)
 texture = ExtResource("2_go6xv")
+
+[node name="aspSpell" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_asvkj")
+bus = &"sfx"
 
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
