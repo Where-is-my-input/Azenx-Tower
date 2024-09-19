@@ -23,6 +23,7 @@ size = Vector2(128, 128)
 [node name="cbEnemy" parent="." index="0"]
 hp = 6
 enemyType = 2
+xp = 15
 enemyName = "Goblin"
 
 [node name="CollisionShape2D" parent="cbEnemy" index="0"]

@@ -11,9 +11,13 @@ const ENEMY = preload("res://code/enemy/zombie.tscn")
 const SPIRIT_WOLF = preload("res://code/enemy/spirit_wolf.tscn")
 const GOBLIN = preload("res://code/enemy/goblin.tscn")
 
+const SPIKES = preload("res://code/hazards/spikes.tscn")
+
 const COLLECTIBLE = preload("res://code/item/collectible.tscn")
 const SWORD = preload("res://code/item/sword.tscn")
 const AXE = preload("res://code/item/item.tscn")
+const FIREBALL = preload("res://code/item/fireball.tscn")
+const BOMB = preload("res://code/item/bomb.tscn")
 
 var playerSpawned = false
 var exitSpawned = false
@@ -26,6 +30,7 @@ var playerSpawnPos
 func _ready() -> void:
 	Global.connect("spawnPlayer", playerSpawn)
 	Global.connect("spawnEnemy", spawnEnemy)
+	Global.connect("spawnSpike", spawnSpike)
 	Global.connect("spawnExit", spawnExit)
 	Global.connect("spawnItem", spawnItem)
 	#Global.connect("floorGenerated", forceSpawn)
@@ -42,17 +47,28 @@ func damageAnimLog(type, value, pos):
 	add_child(log)
 	log.global_position = pos
 
-func spawnItem(pos):
-	match randi_range(0,3):
+func spawnSpike(pos):
+	spawn(SPIKES, pos)
+
+func spawnItem(pos, item = -1):
+	var calculatePos = false
+	if item == -1: 
+		item = randi_range(0,5)
+		calculatePos = true
+	match item:
 		0:
-			spawn(SWORD, pos)
+			spawn(SWORD, pos, calculatePos)
 		1:
-			spawn(AXE, pos)
+			spawn(AXE, pos, calculatePos)
 		2:
-			spawn(COLLECTIBLE, pos)
+			spawn(COLLECTIBLE, pos, calculatePos)
+		3:
+			spawn(FIREBALL, pos, calculatePos)
+		4:
+			spawn(BOMB, pos, calculatePos)
 
 func floorGenerated():
-	if playerSpawnPos == null && spawnFailSafePos == null: spawnFailSafePos = (Vector2(0,0) * Vector2(64, 64)) + Vector2(32, 32)
+	if playerSpawnPos == null && spawnFailSafePos == null: spawnFailSafePos = Vector2(32, 32) #(Vector2(0,0) * Vector2(64, 64)) + 
 	Global.player.get_child(0).global_position = playerSpawnPos if playerSpawnPos != null else spawnFailSafePos
 	Global.player.get_child(0).connect("dead", gameOver)
 	Global.player.enterFloor()
@@ -94,10 +110,10 @@ func spawnExit(pos, forceSpawn = false):
 	Global.setDoorCoordinates.emit(pos)
 	spawn(FLOOR_EXIT, pos)
 
-func spawn(node, pos):
+func spawn(node, pos, calculatePos = true):
 	if pos == null: pos = Vector2(0,0)
 	var spawnedNode = node.instantiate()
-	spawnedNode.global_position = (Vector2(pos) * Vector2(64, 64)) + Vector2(32, 32)
+	spawnedNode.global_position = (Vector2(pos) * Vector2(64, 64)) + Vector2(32, 32) if calculatePos else pos
 	if spawnedNode.get_child(0).is_in_group("Enemy"):
 		spawnedNode.get_child(0).level = Global.floor - sqrt(Global.floor) * 2 + 1
 		spawnedNode.get_child(0).levelScale()
@@ -115,5 +131,5 @@ func nextTurn():
 	for c in spawns.get_children():
 		if c != null && c.is_in_group("Enemy") && c.get_child(0) is CharacterBody2D:
 			c.get_child(0).playTurn()
-			if c.get_child(0).is_in_group("PlayTurn"): await get_tree().create_timer(0.2).timeout
+			if c.get_child(0).is_in_group("PlayTurn"): await get_tree().create_timer(0.01).timeout
 	Global.enemyTurn.emit()

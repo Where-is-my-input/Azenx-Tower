@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmai67pboveuv"]
+[gd_scene load_steps=10 format=3 uid="uid://cmai67pboveuv"]
 
 [ext_resource type="Script" path="res://code/item/item.gd" id="1_mondr"]
 [ext_resource type="Texture2D" uid="uid://crd7t3jv3j2t8" path="res://assets/sprites/items/axe.png" id="1_rv18i"]
+[ext_resource type="PackedScene" uid="uid://ba8ft4ib4c3re" path="res://code/spell/spell.tscn" id="2_fo5vn"]
 [ext_resource type="Texture2D" uid="uid://dtt2lnvxlgo7t" path="res://assets/sprites/items/sword.png" id="2_icy3x"]
+[ext_resource type="PackedScene" uid="uid://ddmo8fvsadupj" path="res://code/spell/bomb.tscn" id="3_clqao"]
+[ext_resource type="Texture2D" uid="uid://fo236cbmquq2" path="res://icon.svg" id="5_o1gsq"]
+[ext_resource type="Texture2D" uid="uid://q3gbk2ch1tm6" path="res://assets/sprites/fireball.png" id="6_tu471"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnasd"]
 size = Vector2(32, 32)
@@ -19,6 +23,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("5_o1gsq")
+}],
+"loop": true,
+"name": &"bomb",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_tu471")
+}],
+"loop": true,
+"name": &"fireball",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_icy3x")
 }],
 "loop": true,
@@ -28,6 +48,8 @@ animations = [{
 
 [node name="item" type="Node2D"]
 script = ExtResource("1_mondr")
+SPELL = ExtResource("2_fo5vn")
+BOMB = ExtResource("3_clqao")
 
 [node name="aItem" type="Area2D" parent="."]
 

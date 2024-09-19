@@ -41,9 +41,8 @@ func explode():
 func spellFinished():
 	finished -= 1
 	if finished <= 0:
-		print("I executed")
 		queue_free()
 
 func getXP(xp = 1):
 	if parent == null: return
-	parent.getXP(xp)
+	parent.getXP(xp + randi_range(0, sqrt(xp)))

@@ -95,7 +95,10 @@ func _physics_process(delta):
 		if direction:
 			dirLooking = direction
 	#if move:
-	if move_and_slide():
+	if move_and_slide() || testOutsideBoundaries():
+		if testOutsideBoundaries():
+			global_position = Vector2(32, 32)
+			return
 		if !Global.godMode:
 			#if global_position == previousPosition:
 				#position.x += SPEED * 1
@@ -173,7 +176,7 @@ func _input(event: InputEvent) -> void:
 		else:
 			Global.manaLog.emit("Teleport is in cooldown")
 			Global.manaLog.emit(str(teleportCooldown) + " turns left")
-	elif event.is_action_pressed("spell") && !blockMovement:
+	elif event.is_action_pressed("spell") && !blockMovement && spell != null:
 		var manaRequired:int = maxMana * 0.25
 		if mana >= manaRequired:
 			asp_spell.play()
@@ -204,7 +207,7 @@ func spellFinished():
 
 #func _on_tmr_movement_timeout() -> void:
 	#as_player.stop()
-func getHit(damage = 1):
+func getHit(damage:int = 1):
 	if !Global.godMode: hp -= damage
 	Global.damageLog.emit("You were hit for " + str(damage) + " damage")
 	Global.damageAnimLog.emit(0, damage, global_position)
@@ -272,11 +275,19 @@ func scaleStats():
 	atk = atk + 1
 
 func equipWeapon(w):
+	if weapon.weaponType == Global.weaponType.AXE:
+		Global.spawnItem.emit(global_position, 1)
+	elif weapon.weaponType == Global.weaponType.SWORD:
+		Global.spawnItem.emit(global_position, 0)
 	weapon.queue_free()
 	weapon = w
 	add_child(weapon)
 	Global.updateHUDResources.emit(self)
 
+func equipSpell(s):
+	if spell != null: Global.spawnItem.emit(global_position, 4 if spell.resource_path == "res://code/spell/bomb.tscn" else 3)
+	spell = s
+	Global.updateHUDResources.emit(self)
 
 func _on_turn_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemy"):

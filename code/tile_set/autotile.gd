@@ -56,6 +56,8 @@ func autoTile():
 					Global.spawnEnemy.emit(Vector2(cx, cy))
 				elif noise > -0.1 && noise < 0.0:
 					Global.spawnExit.emit(Vector2(cx, cy))
+				elif noise > 0.1 && noise < 0.2:
+					Global.spawnSpike.emit(Vector2(cx, cy))
 				elif noise > 0.299:
 					Global.spawnItem.emit(Vector2(cx, cy))
 			else:

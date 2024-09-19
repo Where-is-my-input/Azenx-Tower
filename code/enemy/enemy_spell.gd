@@ -25,7 +25,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
-		if body.getHit(damage):
-			get_parent().getXP(body.xp)
+		if body.getHit(damage + randi_range(0, sqrt(damage))):
+			get_parent().getXP(body.xp + randi_range(0, sqrt(body.xp)))
 	if !body.is_in_group("Enemy"):
 		queue_free()

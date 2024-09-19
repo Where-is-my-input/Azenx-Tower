@@ -8,6 +8,7 @@ signal floorGenerated
 signal spawnPlayer
 signal spawnEnemy
 signal spawnExit
+signal spawnSpike
 signal spawnItem
 signal setDoorCoordinates
 
@@ -25,7 +26,7 @@ var godMode = false
 
 enum gameMode { ARCADE, ENDLESS }
 enum enemyType { CHUPA_CU, SPIRIT_WOLF, GOBLIN }
-enum weaponType { AXE, SWORD }
+enum weaponType { AXE, SWORD, FIREBALL, BOMB, HANDS }
 
 var currentGameMode = gameMode.ARCADE
 var seed = "ikkisoad"
@@ -75,3 +76,25 @@ func instantiatePlayer():
 	player = PLAYER.instantiate()
 	add_child(player)
 	remove_child(player)
+
+var showTimer = false
+var timed = false
+var time: float = 0.0
+var hours: int = 0
+var minutes: int = 0
+var seconds: int = 0
+var msec: int = 0
+
+func _process(delta):
+	time += delta
+	msec = fmod(time, 1) * 100
+	seconds = fmod(time, 60)
+	minutes = fmod(time, 3600) / 60
+	hours = floor(time / 60 / 60 / 60)
+
+func resetIGT():
+	time = 0.0
+	hours = 0
+	minutes = 0
+	seconds = 0
+	msec = 0

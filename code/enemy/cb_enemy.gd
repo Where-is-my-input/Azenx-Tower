@@ -36,7 +36,7 @@ func _ready() -> void:
 func levelScale():
 	atk = atk + level
 	hp = hp + (level * 2)
-	xp = xp + sqrt(xp) * 2
+	xp = xp + sqrt(xp) * level
 
 func playTurn():
 	#await get_tree().create_timer(0.07).timeout
@@ -72,8 +72,8 @@ func attack():
 			add_child(newSpell)
 			#newSpell.scale.x *= facing
 		else:
+			target.getHit(atk + randi_range(0, sqrt(atk)))
 			if target == null: return
-			target.getHit(atk)
 			match Vector2(evaluateCoordinate(target.global_position.x, global_position.x), evaluateCoordinate(target.global_position.y, global_position.y)):
 				Vector2(1,0):
 					animation_player.play("attack")
@@ -109,7 +109,7 @@ func move(direction):
 	if snapped(pos, Vector2(1,1)) != snapped(global_position, Vector2(1,1)):
 		pos = global_position
 
-func getHit(damage = 1):
+func getHit(damage:int = 1):
 	hp -= damage
 	pb_hp.value = hp
 	animation_player.play("getHit")

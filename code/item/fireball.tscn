@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://2kwbjf7qt5mn"]
+
+[ext_resource type="PackedScene" uid="uid://cmai67pboveuv" path="res://code/item/item.tscn" id="1_yai5b"]
+
+[node name="fireball" instance=ExtResource("1_yai5b")]
+itemType = 2

@@ -19,6 +19,7 @@ func setBorder(size):
 	signalSize()
 
 func signalSize():
+	#var viewportSize = get_viewport()
 	var map_limits = tile_map_layer.get_used_rect()
 	var map_cellsize = tile_map_layer.tile_set.tile_size
 	var limitLeft = map_limits.position.x * map_cellsize.x #+ globalPosition.x

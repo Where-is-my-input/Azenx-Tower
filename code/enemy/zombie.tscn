@@ -22,6 +22,7 @@ size = Vector2(320, 320)
 [node name="cbEnemy" parent="." index="0"]
 hp = 20
 atk = 3
+xp = 25
 
 [node name="CollisionShape2D" parent="cbEnemy" index="0"]
 shape = SubResource("RectangleShape2D_ry1wh")

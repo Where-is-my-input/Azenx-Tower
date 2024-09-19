@@ -68,8 +68,9 @@ func update(player):
 
 func updateResources(player):
 	hb_weapon.setResource(player.weapon.weaponName, player.weapon.atk)
-	var spell = player.spell.instantiate()
-	hb_spell.setResource(spell.spellName, spell.damage)
+	if player.spell != null:
+		var spell = player.spell.instantiate()
+		hb_spell.setResource(spell.spellName, spell.damage)
 
 func setDoorCoordinates(v):
 	door_coordinates.text = str(v)

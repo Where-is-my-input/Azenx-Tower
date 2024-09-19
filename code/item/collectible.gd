@@ -10,5 +10,5 @@ func scaleLevel():
 
 func _on_a_collectible_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
-		body.heal(heal)
+		body.heal(heal + randi_range(0, sqrt(heal)))
 		queue_free()

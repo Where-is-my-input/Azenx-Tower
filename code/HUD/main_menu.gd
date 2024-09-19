@@ -13,6 +13,7 @@ func _on_btn_arcade_pressed() -> void:
 	Global.soundTrack.playRandom()
 	Global.currentGameMode = Global.gameMode.ARCADE
 	Global.floor = 0
+	Global.resetIGT()
 	Global.healPlayer()
 	#Global.instantiatePlayer()
 	get_tree().change_scene_to_file("res://code/debug/debug.tscn")
@@ -20,6 +21,7 @@ func _on_btn_arcade_pressed() -> void:
 func _on_btn_endless_pressed() -> void:
 	Global.soundTrack.playRandom()
 	Global.healPlayer()
+	Global.resetIGT()
 	Global.currentGameMode = Global.gameMode.ENDLESS
 	Global.floor = Global.endlessFloor
 	#Global.instantiatePlayer()

@@ -5,6 +5,7 @@ extends Node2D
 @export var weaponName = "Axe"
 @export var atk:int = 5
 @onready var asp_weapon: AudioStreamPlayer2D = $aspWeapon
+@export var weaponType:Global.weaponType = Global.weaponType.AXE
 
 var level:int = 1
 
@@ -33,8 +34,8 @@ func disableHitbox(v = true):
 func _on_hitbox_body_entered(body) -> void:
 	if body.is_in_group("Enemy"):
 		get_parent().passiveManaRegen()
-		if body.getHit(atk + get_parent().atk):
-			get_parent().getXP(body.xp)
+		if body.getHit(randi_range(0, sqrt(atk)) + atk + get_parent().atk):
+			get_parent().getXP(body.xp + randi_range(0, sqrt(body.xp)))
 		cs_attack.set_deferred("disabled", true)
 
 func flip(dir):
