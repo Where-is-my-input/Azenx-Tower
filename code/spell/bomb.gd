@@ -5,7 +5,7 @@ extends Node2D
 @export var damage:int = 5
 @export var spellName = "Bomb"
 
-var directions = [Vector2(1,0), Vector2(-1,0), Vector2(0,1), Vector2(0,-1), Vector2(1,1), Vector2(-1,1), Vector2(-1,1), Vector2(-1,-1)]
+var directions = [Vector2(1,0), Vector2(-1,0), Vector2(0,1), Vector2(0,-1), Vector2(1,1), Vector2(-1,1), Vector2(1,-1), Vector2(-1,-1)]
 var manaDamage = 0
 var turnsLeft = 3
 var finished = 8

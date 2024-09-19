@@ -20,6 +20,10 @@ func _ready() -> void:
 			spr_spell.rotation_degrees = 0
 		Vector2(0,1):
 			spr_spell.rotation_degrees = 180
+		Vector2(1, 1):
+			spr_spell.rotation_degrees = 180
+		Vector2(-1, 1):
+			spr_spell.rotation_degrees = 180
 
 func _physics_process(delta: float) -> void:
 	global_position += direction * speed

@@ -224,6 +224,7 @@ weapon = NodePath("weapon")
 shape = SubResource("RectangleShape2D_yalc6")
 
 [node name="asPlayer" type="AnimatedSprite2D" parent="cb2Player"]
+z_index = 5
 position = Vector2(0, -15)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_6g7i2")
