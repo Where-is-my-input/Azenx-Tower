@@ -27,7 +27,7 @@ var goTo = null
 func _ready() -> void:
 	pb_hp.max_value = hp
 	pb_hp.value = hp
-	Global.connect("nextTurn", playTurn)
+	#Global.connect("nextTurn", playTurn)
 	pos = global_position
 	previousPosition = global_position
 	spr_enemy.visible = true
@@ -39,7 +39,7 @@ func levelScale():
 	xp = xp + sqrt(xp) * 2
 
 func playTurn():
-	await get_tree().create_timer(0.07).timeout
+	#await get_tree().create_timer(0.07).timeout
 	if attackTurn:
 		attack()
 	else:
@@ -72,7 +72,17 @@ func attack():
 			add_child(newSpell)
 			#newSpell.scale.x *= facing
 		else:
+			if target == null: return
 			target.getHit(atk)
+			match Vector2(evaluateCoordinate(target.global_position.x, global_position.x), evaluateCoordinate(target.global_position.y, global_position.y)):
+				Vector2(1,0):
+					animation_player.play("attack")
+				Vector2(-1,0):
+					animation_player.play("attackLeft")
+				Vector2(0,1):
+					animation_player.play("attackDown")
+				Vector2(0,-1):
+					animation_player.play("attackUp")
 
 func flip(v = -1):
 	spr_enemy.scale.x *= -1

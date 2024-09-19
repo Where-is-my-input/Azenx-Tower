@@ -16,7 +16,7 @@ var exploded = false
 
 func _ready() -> void:
 	Global.connect("nextTurn", turnEnd)
-	damage = damage * finished
+	damage = damage
 	parent = get_parent()
 	var pParent = get_parent().get_parent()
 	parent.spellFinished()

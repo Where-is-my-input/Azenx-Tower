@@ -48,6 +48,7 @@ func _ready():
 	Global.updateHUD.emit(self)
 	Global.connect("nextTurn", nextTurn)
 	Global.connect("limitCamera", limitCamera)
+	Global.connect("enemyTurn", startTurn)
 	Global.updateHUDLevel.emit(self)
 	Global.updateHUDxp.emit(self)
 	if testOutsideBoundaries():
@@ -58,6 +59,9 @@ func limitCamera(limitLeft, limitRight, limitTop, limitBottom):
 	camera_2d.limit_right = limitRight
 	camera_2d.limit_top = limitTop
 	camera_2d.limit_bottom = limitBottom
+
+func startTurn():
+	blockMovement = false
 
 func nextTurn():
 	teleportCooldown -= 1
@@ -99,6 +103,7 @@ func _physics_process(delta):
 				#move_and_slide()
 			if global_position != previousPosition: 
 				global_position = previousPosition
+				blockMovement = false
 				if move_and_slide():
 					global_position = Vector2(32, 32)
 	else:
@@ -110,6 +115,7 @@ func _physics_process(delta):
 		#if direction != Vector2(0,0): weapon.global_position = (direction * Vector2(64, 64)) + global_position
 		#if direction != Vector2(0,0) && !tmr_movement_cooldown.is_stopped(): Global.nextTurn.emit()
 	if snapped(pos, Vector2(1,1)) != snapped(global_position, Vector2(1,1)):
+		blockMovement = true
 		Global.nextTurn.emit()
 		#move = false
 		pos = global_position
@@ -138,10 +144,11 @@ func testOutsideBoundaries():
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack") && tmr_movement_cooldown.is_stopped() && !blockMovement:
+		blockMovement = true
 		weapon.attack()
 		asp_attack.play()
 		tmr_movement_cooldown.start(0.15)
-	elif event.is_action_pressed("teleport"):
+	elif event.is_action_pressed("teleport") && !blockMovement:
 		if testOutsideBoundaries():
 			global_position = Vector2(32, 32)
 		var manaRequired:int = (maxMana * 0.05) * (teleportRange - 1)
@@ -151,8 +158,10 @@ func _input(event: InputEvent) -> void:
 			if move_and_slide() || testOutsideBoundaries():
 				Global.manaLog.emit("Path obstructed")
 				global_position = previousPosition
+				blockMovement = false
 			else:
 				Global.teleported.emit()
+				blockMovement = true
 				teleportCooldown = 5
 				useMana(manaRequired)
 				teleportRange = 2
@@ -190,7 +199,7 @@ func _input(event: InputEvent) -> void:
 			teleportRange -= 1
 
 func spellFinished():
-	blockMovement = false
+	#blockMovement = false
 	Global.nextTurn.emit()
 
 #func _on_tmr_movement_timeout() -> void:
@@ -267,3 +276,13 @@ func equipWeapon(w):
 	weapon = w
 	add_child(weapon)
 	Global.updateHUDResources.emit(self)
+
+
+func _on_turn_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Enemy"):
+		body.add_to_group("PlayTurn")
+
+
+func _on_turn_area_body_exited(body: Node2D) -> void:
+	if body.is_in_group("Enemy"):
+		body.remove_from_group("PlayTurn")

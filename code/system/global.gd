@@ -3,6 +3,7 @@ const PLAYER = preload("res://code/player/player.tscn")
 const ASP_GLOBAL = preload("res://code/system/asp_global.tscn")
 
 signal nextTurn
+signal enemyTurn
 signal floorGenerated
 signal spawnPlayer
 signal spawnEnemy

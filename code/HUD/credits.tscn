@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://dj2rhgvopkhu3"]
+
+[node name="credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="wimi" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="wimi"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 192.0
+offset_right = 303.0
+offset_bottom = 241.0
+text = "Programming:
+Ikkisoad"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="wimi"]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 288.0
+offset_right = 279.0
+offset_bottom = 363.0
+text = "Sprites:
+Makaai
+Ikkisoad"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="wimi"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 418.0
+offset_right = 303.0
+offset_bottom = 493.0
+text = "Play Testing:
+Arturcs
+Darrenvile"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 768.0
+offset_top = 160.0
+offset_right = 808.0
+offset_bottom = 200.0
+
+[node name="OpenGameArt" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "OpenGameArt"
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 65.0
+offset_bottom = 55.0
+text = "aaaaaaa"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dpcxciy8f7egt"]
+[gd_scene load_steps=33 format=3 uid="uid://dpcxciy8f7egt"]
 
 [ext_resource type="Script" path="res://code/player/cb_2_player.gd" id="1_2deyc"]
 [ext_resource type="Script" path="res://code/player/player.gd" id="1_311vf"]
@@ -146,6 +146,9 @@ streams_count = 2
 stream_0/stream = ExtResource("11_7bdwq")
 stream_1/stream = ExtResource("12_gug40")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0f2af"]
+size = Vector2(1152, 640)
+
 [sub_resource type="Animation" id="Animation_ry3nu"]
 length = 0.001
 tracks/0/type = "value"
@@ -251,6 +254,14 @@ bus = &"sfx"
 stream = SubResource("AudioStreamRandomizer_if18m")
 bus = &"sfx"
 
+[node name="turnArea" type="Area2D" parent="cb2Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="cb2Player/turnArea"]
+shape = SubResource("RectangleShape2D_0f2af")
+debug_color = Color(0.534602, 0.561303, 0.496997, 0.42)
+
+[node name="AudioListener2D" type="AudioListener2D" parent="cb2Player"]
+
 [node name="tmrMovement" type="Timer" parent="."]
 one_shot = true
 
@@ -258,3 +269,6 @@ one_shot = true
 libraries = {
 "": SubResource("AnimationLibrary_dcpmh")
 }
+
+[connection signal="body_entered" from="cb2Player/turnArea" to="cb2Player" method="_on_turn_area_body_entered"]
+[connection signal="body_exited" from="cb2Player/turnArea" to="cb2Player" method="_on_turn_area_body_exited"]

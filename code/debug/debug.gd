@@ -1,4 +1,5 @@
 extends Node2D
+@onready var spawns: Node = $spawns
 
 @export var tile:Node2D
 const FLOOR_EXIT = preload("res://code/world/floor_exit.tscn")
@@ -100,7 +101,7 @@ func spawn(node, pos):
 	if spawnedNode.get_child(0).is_in_group("Enemy"):
 		spawnedNode.get_child(0).level = Global.floor - sqrt(Global.floor) * 2 + 1
 		spawnedNode.get_child(0).levelScale()
-	add_child(spawnedNode)
+	spawns.add_child(spawnedNode)
 
 func forceSpawn():
 	if !playerSpawned:
@@ -110,3 +111,9 @@ func forceSpawn():
 
 func nextTurn():
 	turn += 1
+	await get_tree().create_timer(0.01).timeout
+	for c in spawns.get_children():
+		if c != null && c.is_in_group("Enemy") && c.get_child(0) is CharacterBody2D:
+			c.get_child(0).playTurn()
+			if c.get_child(0).is_in_group("PlayTurn"): await get_tree().create_timer(0.2).timeout
+	Global.enemyTurn.emit()

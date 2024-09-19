@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b674ljpjvwo23"]
+[gd_scene load_steps=6 format=3 uid="uid://b674ljpjvwo23"]
 
 [ext_resource type="PackedScene" uid="uid://c3wkbrky7csoc" path="res://code/enemy/enemy.tscn" id="1_8gkno"]
 
@@ -8,13 +8,20 @@ size = Vector2(62, 62)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8q6yc"]
 resource_local_to_scene = true
-size = Vector2(96, 96)
+size = Vector2(32, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gv1fc"]
+size = Vector2(96, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5t8sw"]
 resource_local_to_scene = true
 size = Vector2(320, 320)
 
 [node name="zombie" instance=ExtResource("1_8gkno")]
+
+[node name="cbEnemy" parent="." index="0"]
+hp = 20
+atk = 3
 
 [node name="CollisionShape2D" parent="cbEnemy" index="0"]
 shape = SubResource("RectangleShape2D_ry1wh")
@@ -24,6 +31,9 @@ scale = Vector2(0.032, 0.032)
 
 [node name="CollisionShape2D" parent="cbEnemy/attack" index="0"]
 shape = SubResource("RectangleShape2D_8q6yc")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="cbEnemy/attack" index="1"]
+shape = SubResource("RectangleShape2D_gv1fc")
 
 [node name="CollisionShape2D" parent="cbEnemy/detectPlayer" index="0"]
 shape = SubResource("RectangleShape2D_5t8sw")
