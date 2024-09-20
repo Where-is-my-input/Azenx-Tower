@@ -1,6 +1,7 @@
 extends Node2D
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var tile_set: Node2D = $tileSet
+@onready var tile_map_layer_2: TileMapLayer = $TileMapLayer2
 
 @export var size = Vector2(50,50)
 @export var noiseOctaves = 1
@@ -14,10 +15,11 @@ extends Node2D
 
 var simplexNoise = FastNoiseLite.new()
 
-#func _ready() -> void:
+func _ready() -> void:
 	#clear()
 	#generate()
 	#Global.floorGenerated.emit()
+	print(tile_map_layer_2)
 
 func clear():
 	tile_map_layer.clear()
@@ -32,6 +34,7 @@ func generate():
 	#tile_map_layer.tile_map_data.update_dirty_quadrants()
 
 func autoTile():
+	var updateArray:Array
 	var seed = str(Global.floor) + Global.seed
 	simplexNoise.seed = seed.hash()
 	simplexNoise.fractal_octaves = noiseOctaves
@@ -61,5 +64,8 @@ func autoTile():
 				elif noise > 0.299:
 					Global.spawnItem.emit(Vector2(cx, cy))
 			else:
-				tile_map_layer.set_cell(Vector2i(cx,cy), 0, Vector2i(0,0))
+				tile_map_layer_2.set_cell(Vector2i(cx,cy), 0, Vector2i(1,9))
+				#tile_map_layer_2.get_cell_alternative_tile()
+				updateArray.append(Vector2i(cx,cy))
+	tile_map_layer_2.set_cells_terrain_connect(updateArray, 0, 0)
 	#print("Min: ", min, "max: ", max)

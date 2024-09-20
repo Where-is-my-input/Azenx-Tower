@@ -270,6 +270,7 @@ shape = SubResource("RectangleShape2D_8b82y")
 debug_color = Color(6.73831e-07, 0.643642, 0.296235, 0.42)
 
 [node name="sprEnemy" type="Sprite2D" parent="cbEnemy"]
+z_index = 2
 scale = Vector2(-0.032, 0.032)
 texture = ExtResource("1_uk7ib")
 
