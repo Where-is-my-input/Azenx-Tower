@@ -55,12 +55,10 @@ func _ready():
 		global_position = Vector2(32, 32)
 
 func limitCamera(limitLeft, limitRight, limitTop, limitBottom):
-	if limitRight != 0:
-		camera_2d.limit_left = limitLeft
-		camera_2d.limit_right = limitRight
-	if limitBottom != 0:
-		camera_2d.limit_top = limitTop
-		camera_2d.limit_bottom = limitBottom
+	camera_2d.limit_left = limitLeft if limitRight != 0 else -10000000
+	camera_2d.limit_right = limitRight if limitRight != 0 else 10000000
+	camera_2d.limit_top = limitTop if limitBottom != 0 else -10000000
+	camera_2d.limit_bottom = limitBottom if limitBottom != 0 else 10000000
 
 func startTurn():
 	blockMovement = false

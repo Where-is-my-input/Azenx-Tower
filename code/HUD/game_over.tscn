@@ -39,9 +39,13 @@ alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-text = "Game Over"
+text = "Game Over - "
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="mode" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Arcade Mode"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2

@@ -1,0 +1,112 @@
+[gd_scene load_steps=14 format=3 uid="uid://bnrvsud3xk5y7"]
+
+[ext_resource type="Script" path="res://code/HUD/options.gd" id="1_m3uou"]
+[ext_resource type="AudioStream" uid="uid://ddcw3xxey6gxd" path="res://assets/swishes/swish-1.wav" id="2_7ghcn"]
+[ext_resource type="AudioStream" uid="uid://cxdmc3rtyaxc5" path="res://assets/swishes/swish-2.wav" id="3_xivc1"]
+[ext_resource type="AudioStream" uid="uid://dugjmjv7a553c" path="res://assets/swishes/swish-3.wav" id="4_5jyph"]
+[ext_resource type="AudioStream" uid="uid://xqn5jp3ig3d7" path="res://assets/swishes/swish-4.wav" id="5_yom6r"]
+[ext_resource type="AudioStream" uid="uid://dul1v2qj1dwlf" path="res://assets/swishes/swish-5.wav" id="6_3ir5y"]
+[ext_resource type="AudioStream" uid="uid://g4ck264ke0e7" path="res://assets/sfx/RPG Voice Starter Pack/Type 3/attack1.wav" id="7_idge0"]
+[ext_resource type="AudioStream" uid="uid://dneot66j3o3g7" path="res://assets/sfx/RPG Voice Starter Pack/Type 3/attack2.wav" id="8_xl4i2"]
+[ext_resource type="AudioStream" uid="uid://0iekq7hxsgog" path="res://assets/sfx/RPG Voice Starter Pack/Type 3/attack3.wav" id="9_4higu"]
+[ext_resource type="AudioStream" uid="uid://b5vlanhik8kbk" path="res://assets/sfx/RPG Voice Starter Pack/Type 3/burn.wav" id="10_f5p0l"]
+[ext_resource type="AudioStream" uid="uid://vc18wbgvxhcx" path="res://assets/sfx/RPG Voice Starter Pack/Type 3/fire.wav" id="11_45v17"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ifs0m"]
+streams_count = 5
+stream_0/stream = ExtResource("2_7ghcn")
+stream_1/stream = ExtResource("3_xivc1")
+stream_2/stream = ExtResource("4_5jyph")
+stream_3/stream = ExtResource("5_yom6r")
+stream_4/stream = ExtResource("6_3ir5y")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3bj1w"]
+streams_count = 5
+stream_0/stream = ExtResource("7_idge0")
+stream_1/stream = ExtResource("8_xl4i2")
+stream_2/stream = ExtResource("9_4higu")
+stream_3/stream = ExtResource("10_f5p0l")
+stream_4/stream = ExtResource("11_45v17")
+
+[node name="options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m3uou")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 393.0
+offset_right = -393.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label4" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "MASTER"
+horizontal_alignment = 1
+
+[node name="master" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "BGM"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="bgm" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "SFX"
+horizontal_alignment = 1
+
+[node name="sfx" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "VA"
+horizontal_alignment = 1
+
+[node name="va" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 480.0
+offset_right = 632.0
+offset_bottom = 511.0
+text = "MAIN MENU"
+
+[node name="sfx" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_ifs0m")
+bus = &"sfx"
+
+[node name="va" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_3bj1w")
+bus = &"va"
+
+[connection signal="value_changed" from="VBoxContainer/master" to="." method="_on_master_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/bgm" to="." method="_on_bgm_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/sfx" to="." method="_on_sfx_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/va" to="." method="_on_va_value_changed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

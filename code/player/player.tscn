@@ -248,11 +248,11 @@ color = Color(1, 0.26101, 0.191226, 1)
 
 [node name="aspAttack" type="AudioStreamPlayer2D" parent="cb2Player"]
 stream = SubResource("AudioStreamRandomizer_dm3xa")
-bus = &"sfx"
+bus = &"va"
 
 [node name="aspSpell" type="AudioStreamPlayer2D" parent="cb2Player"]
 stream = SubResource("AudioStreamRandomizer_if18m")
-bus = &"sfx"
+bus = &"va"
 
 [node name="turnArea" type="Area2D" parent="cb2Player"]
 

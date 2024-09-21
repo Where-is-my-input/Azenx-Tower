@@ -40,6 +40,7 @@ func _ready() -> void:
 	soundTrack = ASP_GLOBAL.instantiate()
 	add_child(soundTrack)
 	instantiatePlayer()
+	RenderingServer.set_default_clear_color(Color.DARK_SLATE_GRAY)#DARK_SLATE_GRAY
 
 func healPlayer():
 	player.fullHeal()

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://code/system/asp_global.gd" id="1_amj70"]
 
 [node name="aspGlobal" type="AudioStreamPlayer"]
-bus = &"soundtrack"
+bus = &"bgm"
 script = ExtResource("1_amj70")
 
 [connection signal="finished" from="." to="." method="_on_finished"]
