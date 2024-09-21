@@ -20,7 +20,7 @@ size = Vector2(320, 320)
 [node name="zombie" instance=ExtResource("1_8gkno")]
 
 [node name="cbEnemy" parent="." index="0"]
-hp = 20
+hp = 16
 atk = 3
 xp = 25
 

@@ -29,7 +29,7 @@ enum enemyType { CHUPA_CU, SPIRIT_WOLF, GOBLIN }
 enum weaponType { AXE, SWORD, FIREBALL, BOMB, HANDS }
 
 var currentGameMode = gameMode.ARCADE
-var seed = "ikkisoad"
+var seed = "azenx"
 var floor = 0
 var endlessFloor = 0
 

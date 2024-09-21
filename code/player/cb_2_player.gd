@@ -55,10 +55,12 @@ func _ready():
 		global_position = Vector2(32, 32)
 
 func limitCamera(limitLeft, limitRight, limitTop, limitBottom):
-	camera_2d.limit_left = limitLeft
-	camera_2d.limit_right = limitRight
-	camera_2d.limit_top = limitTop
-	camera_2d.limit_bottom = limitBottom
+	if limitRight != 0:
+		camera_2d.limit_left = limitLeft
+		camera_2d.limit_right = limitRight
+	if limitBottom != 0:
+		camera_2d.limit_top = limitTop
+		camera_2d.limit_bottom = limitBottom
 
 func startTurn():
 	blockMovement = false
@@ -107,14 +109,14 @@ func _physics_process(delta):
 			if global_position != previousPosition: 
 				global_position = previousPosition
 				blockMovement = false
+				if dirLooking:
+					flip()
 				if move_and_slide():
-					global_position = Vector2(32, 32)
+					global_position = Vector2(32, 32) #+ Vector2(64, 64)
 	else:
 		playAnimation(dirLooking)
 		if dirLooking:
-			aim.global_position = global_position + (Vector2(64, 64) * teleportRange ) * dirLooking
-			weapon.global_position = (dirLooking * Vector2(64, 64)) + global_position
-			weapon.flip(dirLooking)
+			flip()
 		#if direction != Vector2(0,0): weapon.global_position = (direction * Vector2(64, 64)) + global_position
 		#if direction != Vector2(0,0) && !tmr_movement_cooldown.is_stopped(): Global.nextTurn.emit()
 	if snapped(pos, Vector2(1,1)) != snapped(global_position, Vector2(1,1)):
@@ -124,7 +126,12 @@ func _physics_process(delta):
 		pos = global_position
 		#audio_move.play()
 		#swap = false
-	
+
+func flip():
+	aim.global_position = global_position + (Vector2(64, 64) * teleportRange ) * dirLooking
+	weapon.global_position = (dirLooking * Vector2(64, 64)) + global_position
+	weapon.flip(dirLooking)
+
 #func die():
 	#audio_death.play()
 	#Global.restart.emit()

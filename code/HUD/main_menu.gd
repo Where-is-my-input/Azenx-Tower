@@ -1,6 +1,7 @@
 extends Control
 @onready var btn_arcade: Button = $BoxContainer/VBoxContainer/btnArcade
 @onready var txt_seed: TextEdit = $BoxContainer/VBoxContainer/txtSeed
+const CREDITS = preload("res://code/HUD/credits.tscn")
 
 func _ready() -> void:
 	Global.soundTrack.playMainMenu()
@@ -30,3 +31,7 @@ func _on_btn_endless_pressed() -> void:
 
 func _on_txt_seed_text_changed() -> void:
 	Global.seed = txt_seed.text
+
+
+func _on_btn_credits_pressed() -> void:
+	add_child(CREDITS.instantiate())

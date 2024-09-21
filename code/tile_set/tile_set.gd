@@ -18,12 +18,12 @@ func setBorder(size):
 		tile_map_layer.set_cell(Vector2i(size.x + 1, y - 1), 0, Vector2i(0,0))
 	signalSize()
 
-func signalSize():
-	#var viewportSize = get_viewport()
+func signalSize(force = false):
+	var viewportSize = get_viewport().size
 	var map_limits = tile_map_layer.get_used_rect()
 	var map_cellsize = tile_map_layer.tile_set.tile_size
 	var limitLeft = map_limits.position.x * map_cellsize.x #+ globalPosition.x
 	var limitRight = map_limits.end.x * map_cellsize.x #+ globalPosition.x
 	var limitTop = map_limits.position.y * map_cellsize.y# + globalPosition.y
 	var limitBottom = map_limits.end.y * map_cellsize.y #+ globalPosition.y
-	Global.limitCamera.emit(limitLeft, limitRight, limitTop, limitBottom)
+	Global.limitCamera.emit(limitLeft, limitRight if viewportSize.x < limitRight || force else 0, limitTop, limitBottom if viewportSize.y < limitBottom || force else 0)

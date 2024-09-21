@@ -2,6 +2,7 @@ extends Node2D
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var tile_set: Node2D = $tileSet
 @onready var tile_map_layer_2: TileMapLayer = $TileMapLayer2
+@onready var tile_map_layer_3: TileMapLayer = $TileMapLayer3
 
 @export var size = Vector2(50,50)
 @export var noiseOctaves = 1
@@ -15,14 +16,16 @@ extends Node2D
 
 var simplexNoise = FastNoiseLite.new()
 
-func _ready() -> void:
-	#clear()
-	#generate()
-	#Global.floorGenerated.emit()
-	print(tile_map_layer_2)
+#func _ready() -> void:
+	##clear()
+	##generate()
+	##Global.floorGenerated.emit()
+	#print(tile_map_layer_2)
 
 func clear():
 	tile_map_layer.clear()
+	tile_map_layer_2.clear()
+	tile_map_layer_3.clear()
 
 func generate():
 	clear()
@@ -35,6 +38,7 @@ func generate():
 
 func autoTile():
 	var updateArray:Array
+	var updateArrayFloor:Array
 	var seed = str(Global.floor) + Global.seed
 	simplexNoise.seed = seed.hash()
 	simplexNoise.fractal_octaves = noiseOctaves
@@ -45,14 +49,19 @@ func autoTile():
 	
 	for cx in range(size.x):
 		for cy in range(size.y):
-			if Vector2(cx, cy) == Vector2(0,0): tile_map_layer.set_cell(Vector2i(cx,cy), 0, Vector2i(0,0))
+			if Vector2(cx, cy) == Vector2(0,0): 
+				#tile_map_layer.set_cell(Vector2i(cx,cy), 0, Vector2i(0,0))
+				tile_map_layer_3.set_cell(Vector2i(cx,cy), 0, Vector2i(14,1))
+				continue
 			var noise = simplexNoise.get_noise_2d(cx, cy)
 			#if noise < min:
 				#min = noise
 			#if noise > max:
 				#max = noise
 			if noise < noiseThreshold:
-				tile_map_layer.set_cell(Vector2i(cx,cy), 0, Vector2i(1,0))
+				#tile_map_layer.set_cell(Vector2i(cx,cy), 0, Vector2i(1,0))
+				tile_map_layer_3.set_cell(Vector2i(cx,cy), 0, Vector2i(14,1))
+				#updateArrayFloor.append(Vector2i(cx,cy))
 				if noise > -0.8 && noise < -0.6:
 					Global.spawnPlayer.emit(Vector2(cx, cy))
 				elif noise > -0.5 && noise < -0.4:
@@ -64,8 +73,11 @@ func autoTile():
 				elif noise > 0.299:
 					Global.spawnItem.emit(Vector2(cx, cy))
 			else:
-				tile_map_layer_2.set_cell(Vector2i(cx,cy), 0, Vector2i(1,9))
+				tile_map_layer.set_cell(Vector2i(cx,cy), 0, Vector2i(0,0))
+				#tile_map_layer_2.set_cell(Vector2i(cx,cy), 0, Vector2i(1,9))
 				#tile_map_layer_2.get_cell_alternative_tile()
-				updateArray.append(Vector2i(cx,cy))
-	tile_map_layer_2.set_cells_terrain_connect(updateArray, 0, 0)
+				#updateArray.append(Vector2i(cx,cy))
+	#tile_map_layer_2.set_cells_terrain_connect(updateArray, 0, 0, true)
+	#tile_map_layer_2.set_cells_terrain_connect(updateArray, 0, 0, true)
+	#tile_map_layer_3.set_cells_terrain_connect(updateArrayFloor, 0, 0, true)
 	#print("Min: ", min, "max: ", max)

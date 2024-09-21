@@ -8,7 +8,7 @@ func _ready():
 	add_child(Global.player)
 	Global.connect("nextTurn", nextTurn)
 	Global.player.enterFloor()
-	tile_set.signalSize()
+	tile_set.signalSize(true)
 
 func _on_bonfire_body_entered(body: Node2D) -> void:
 	player = body

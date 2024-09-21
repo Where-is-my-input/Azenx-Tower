@@ -66,4 +66,5 @@ scroll_fit_content_height = true
 
 [connection signal="pressed" from="BoxContainer/VBoxContainer/btnArcade" to="." method="_on_btn_arcade_pressed"]
 [connection signal="pressed" from="BoxContainer/VBoxContainer/btnEndless" to="." method="_on_btn_endless_pressed"]
+[connection signal="pressed" from="BoxContainer/VBoxContainer/btnCredits" to="." method="_on_btn_credits_pressed"]
 [connection signal="text_changed" from="BoxContainer/VBoxContainer/txtSeed" to="." method="_on_txt_seed_text_changed"]
