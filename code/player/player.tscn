@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dpcxciy8f7egt"]
+[gd_scene load_steps=33 format=3 uid="uid://dpcxciy8f7egt"]
 
 [ext_resource type="Script" path="res://code/player/cb_2_player.gd" id="1_2deyc"]
 [ext_resource type="Script" path="res://code/player/player.gd" id="1_311vf"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://dneot66j3o3g7" path="res://assets/sfx/RPG Voice Starter Pack/Type 3/attack2.wav" id="9_vx5dt"]
 [ext_resource type="AudioStream" uid="uid://0iekq7hxsgog" path="res://assets/sfx/RPG Voice Starter Pack/Type 3/attack3.wav" id="10_0un55"]
 [ext_resource type="AudioStream" uid="uid://vc18wbgvxhcx" path="res://assets/sfx/RPG Voice Starter Pack/Type 3/fire.wav" id="11_7bdwq"]
+[ext_resource type="AudioStream" uid="uid://dt8bdsm57bmn3" path="res://assets/sfx/Rise02.wav" id="12_b4sac"]
 [ext_resource type="AudioStream" uid="uid://b5vlanhik8kbk" path="res://assets/sfx/RPG Voice Starter Pack/Type 3/burn.wav" id="12_gug40"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yalc6"]
@@ -253,6 +254,9 @@ bus = &"va"
 [node name="aspSpell" type="AudioStreamPlayer2D" parent="cb2Player"]
 stream = SubResource("AudioStreamRandomizer_if18m")
 bus = &"va"
+
+[node name="aspLevelUp" type="AudioStreamPlayer2D" parent="cb2Player"]
+stream = ExtResource("12_b4sac")
 
 [node name="turnArea" type="Area2D" parent="cb2Player"]
 

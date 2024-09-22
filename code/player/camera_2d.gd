@@ -1,6 +1,7 @@
 extends Camera2D
 
 func _input(event: InputEvent) -> void:
+	return
 	if event.is_action_pressed("zoomIn"):
 		zoom += Vector2(1,1)
 		if zoom > Vector2(5, 5):

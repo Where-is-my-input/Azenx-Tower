@@ -6,6 +6,7 @@ extends Control
 @onready var va: HSlider = $VBoxContainer/va
 @onready var aspsfx: AudioStreamPlayer = $sfx
 @onready var aspva: AudioStreamPlayer = $va
+@onready var button: Button = $Button
 
 const DB_MAX = 6
 const DB_MIN = -24
@@ -18,6 +19,7 @@ const DB_MIN = -24
 
 func _ready() -> void:
 	GetBaseVolume()
+	button.grab_focus()
 	
 func GetBaseVolume() -> void:
 	master.value = db_to_linear(AudioServer.get_bus_volume_db(masterBus))

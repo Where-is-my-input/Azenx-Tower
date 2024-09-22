@@ -15,8 +15,8 @@ func _on_bonfire_body_entered(body: Node2D) -> void:
 
 func _process(delta: float) -> void:
 	if player != null && player.is_in_group("Player"):
-		player.heal(5)
-		player.regenMana(5)
+		player.heal(5 * Global.floor)
+		player.regenMana(5 * Global.floor)
 
 func _on_bonfire_body_exited(body: Node2D) -> void:
 	player = null

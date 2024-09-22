@@ -1,5 +1,6 @@
 extends Node2D
 @onready var cb_2_player: CharacterBody2D = $cb2Player
+@onready var camera_2d: Camera2D = $cb2Player/Camera2D
 
 func enterFloor():
 	#cb_2_player.global_position = pos
@@ -20,3 +21,6 @@ func dead():
 func fullHeal():
 	if cb_2_player != null:
 		cb_2_player.heal(cb_2_player.maxHP)
+
+func setCameraOffset(v = 0):
+	camera_2d.drag_vertical_offset = v

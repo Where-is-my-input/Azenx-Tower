@@ -1,32 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://1so062rvj7hq"]
+[gd_scene load_steps=4 format=3 uid="uid://bwomyhbs0bv4y"]
 
-[ext_resource type="Texture2D" uid="uid://dr3itnjspi7oe" path="res://assets/sprites/geovanna_mas_q_tem_cara_de_sayu.png" id="1_jt6ib"]
-[ext_resource type="Script" path="res://code/HUD/game_over.gd" id="1_qsvcd"]
-[ext_resource type="Texture2D" uid="uid://c3xl72q06tje5" path="res://assets/backgrounds/cenario.png" id="2_rsmel"]
+[ext_resource type="Script" path="res://code/HUD/game_over.gd" id="1_b68b8"]
+[ext_resource type="Texture2D" uid="uid://c3xl72q06tje5" path="res://assets/backgrounds/cenario.png" id="2_n81nm"]
+[ext_resource type="Texture2D" uid="uid://dr3itnjspi7oe" path="res://assets/sprites/geovanna_mas_q_tem_cara_de_sayu.png" id="3_o74m4"]
 
-[node name="game_over" type="Control"]
+[node name="you_win" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_qsvcd")
+script = ExtResource("1_b68b8")
 
 [node name="TextureRect2" type="TextureRect" parent="."]
-layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("2_rsmel")
+texture = ExtResource("2_n81nm")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 8.0
-offset_top = -40.0
-offset_right = 1579.0
-offset_bottom = 2259.0
+offset_left = 72.0
+offset_top = -32.0
+offset_right = 1643.0
+offset_bottom = 2267.0
 scale = Vector2(0.330956, 0.330956)
-texture = ExtResource("1_jt6ib")
+texture = ExtResource("3_o74m4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -46,7 +44,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-text = "Game Over - "
+text = "Thank you for playing! - "
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -81,7 +79,6 @@ layout_mode = 2
 text = "00:0:0:0:0:"
 
 [node name="Button" type="Button" parent="."]
-layout_mode = 0
 offset_left = 1040.0
 offset_top = 592.0
 offset_right = 1136.0

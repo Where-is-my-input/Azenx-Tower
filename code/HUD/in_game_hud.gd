@@ -75,6 +75,6 @@ func updateResources(player):
 func setDoorCoordinates(v):
 	door_coordinates.text = str(v)
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("doorCoordinates"):
-		door_coordinates.visible = !door_coordinates.visible
+#func _input(event: InputEvent) -> void:
+	#if event.is_action_pressed("doorCoordinates"):
+		#door_coordinates.visible = !door_coordinates.visible

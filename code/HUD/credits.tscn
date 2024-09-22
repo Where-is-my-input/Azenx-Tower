@@ -21,8 +21,10 @@ grow_vertical = 2
 
 [node name="wimi" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -93.0
+offset_top = -38.0
+offset_right = -53.0
+offset_bottom = 2.0
 
 [node name="Label" type="Label" parent="wimi"]
 layout_mode = 0
@@ -60,25 +62,64 @@ horizontal_alignment = 1
 
 [node name="Control" type="Control" parent="."]
 anchors_preset = 0
-offset_left = 768.0
-offset_top = 160.0
-offset_right = 808.0
-offset_bottom = 200.0
+offset_left = 343.0
+offset_top = 67.0
+offset_right = 383.0
+offset_bottom = 107.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = -13.0
+offset_top = 11.0
+offset_right = 29.0
+offset_bottom = 51.0
+scale = Vector2(18.6323, 11.2837)
+color = Color(0.244776, 0.244776, 0.244776, 1)
 
 [node name="OpenGameArt" type="Label" parent="Control"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "OpenGameArt"
+offset_left = 306.0
+offset_top = -21.0
+offset_right = 471.0
+offset_bottom = 2.0
+text = "OpenGameArt Assets"
 
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 0
 offset_top = 32.0
 offset_right = 65.0
 offset_bottom = 55.0
-text = "aaaaaaa"
+text = "BGM
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.186
-one_shot = true
-autostart = true
+The Slimeking's Tower OST (Retro like) - CodeManu
+Approaching the Tower - Viktor Kraus
+Highly Volcanic Stakes - EggsAndBakeyGJ
+
+SFX
+
+Swishes Sound Pack - artisticdude
+Spell 4 (fire) - Bart K.
+Level up, power up, Coin get (13 Sounds) - wobbleboxx
+
+Voice Acting
+
+Female RPG Voice Starter Pack - cicifyre
+"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 442.0
+offset_top = 131.0
+offset_right = 737.0
+offset_bottom = 362.0
+text = "Tileset
+
+Dungeon tileset - Buch
+
+Sprites
+
+Fire/Flame - KerteX_
+Papers - Kutejnikov
+16-bit animated bomb - victordelimaw"
+horizontal_alignment = 1

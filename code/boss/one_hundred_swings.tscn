@@ -1,0 +1,188 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5vaqial3c6k"]
+
+[ext_resource type="Script" path="res://code/boss/one_hundred_swings.gd" id="1_psefr"]
+[ext_resource type="PackedScene" uid="uid://d1irf1eylk16h" path="res://code/weapon/cs_attack.tscn" id="1_r0sd5"]
+
+[node name="one_hundred_swings" type="Node2D"]
+script = ExtResource("1_psefr")
+
+[node name="aSwings" type="Area2D" parent="."]
+
+[node name="csAttack" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(0, -64)
+
+[node name="csAttack2" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-64, 0)
+rotation = -1.5708
+
+[node name="csAttack3" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(64, 0)
+rotation = 1.5708
+
+[node name="csAttack4" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(0, 64)
+rotation = 3.14159
+
+[node name="csAttack5" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-64, 64)
+rotation = -1.5708
+
+[node name="csAttack6" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(64, 64)
+rotation = 1.5708
+
+[node name="csAttack7" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(64, -64)
+rotation = 1.5708
+
+[node name="csAttack8" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-64, -64)
+rotation = -1.5708
+
+[node name="csAttack9" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-128, 0)
+rotation = -1.5708
+
+[node name="csAttack10" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-128, 64)
+rotation = -1.5708
+
+[node name="csAttack11" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-128, -64)
+rotation = -1.5708
+
+[node name="csAttack12" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-192, 0)
+rotation = -1.5708
+
+[node name="csAttack13" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-192, 64)
+rotation = -1.5708
+
+[node name="csAttack15" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(0, 128)
+rotation = 3.14159
+
+[node name="csAttack16" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-64, 128)
+rotation = 3.14159
+
+[node name="csAttack17" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(64, 128)
+rotation = 3.14159
+
+[node name="csAttack20" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(128, 0)
+rotation = 1.5708
+
+[node name="csAttack21" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(128, 64)
+rotation = 1.5708
+
+[node name="csAttack22" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(128, -64)
+rotation = 1.5708
+
+[node name="csAttack23" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(128, 128)
+rotation = 3.14159
+
+[node name="csAttack24" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(192, 0)
+rotation = 1.5708
+
+[node name="csAttack25" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(192, 64)
+rotation = 1.5708
+
+[node name="csAttack26" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(192, -64)
+rotation = 1.5708
+
+[node name="csAttack27" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(192, 128)
+rotation = 3.14159
+
+[node name="csAttack18" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-128, 128)
+rotation = 3.14159
+
+[node name="csAttack19" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-192, 128)
+rotation = 3.14159
+
+[node name="csAttack42" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(0, 192)
+rotation = 3.14159
+
+[node name="csAttack43" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-64, 192)
+rotation = 3.14159
+
+[node name="csAttack44" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(64, 192)
+rotation = 3.14159
+
+[node name="csAttack45" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(128, 192)
+rotation = 3.14159
+
+[node name="csAttack46" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(192, 192)
+rotation = 3.14159
+
+[node name="csAttack47" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-128, 192)
+rotation = 3.14159
+
+[node name="csAttack48" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-192, 192)
+rotation = 3.14159
+
+[node name="csAttack14" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-192, -64)
+rotation = -1.5708
+
+[node name="csAttack28" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(0, -128)
+
+[node name="csAttack29" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(64, -128)
+
+[node name="csAttack30" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-64, -128)
+
+[node name="csAttack31" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-128, -128)
+
+[node name="csAttack32" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(128, -128)
+
+[node name="csAttack33" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(192, -128)
+
+[node name="csAttack34" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-192, -128)
+
+[node name="csAttack35" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(0, -192)
+
+[node name="csAttack36" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(64, -192)
+
+[node name="csAttack37" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-64, -192)
+
+[node name="csAttack38" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-128, -192)
+
+[node name="csAttack39" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(128, -192)
+
+[node name="csAttack40" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(192, -192)
+
+[node name="csAttack41" parent="aSwings" instance=ExtResource("1_r0sd5")]
+position = Vector2(-192, -192)
+
+[connection signal="body_entered" from="aSwings" to="." method="_on_a_swings_body_entered"]

@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://code/debug/debug.gd" id="1_4u1ay"]
 [ext_resource type="PackedScene" uid="uid://cfofqdy6jgjoe" path="res://code/HUD/in_game_hud.tscn" id="4_ece4y"]
 [ext_resource type="PackedScene" uid="uid://cas8oe8haj7rt" path="res://code/tile_set/autotile.tscn" id="4_rcvlu"]
-[ext_resource type="PackedScene" uid="uid://b0jo7arpgo78g" path="res://code/system/debugger.tscn" id="4_tuleo"]
 [ext_resource type="Script" path="res://code/debug/spawns.gd" id="5_vrrx8"]
+[ext_resource type="Texture2D" uid="uid://e4vxvfnad5kc" path="res://assets/backgrounds/fog.png" id="6_ri64i"]
 
 [node name="debug" type="Node2D" node_paths=PackedStringArray("tile")]
 process_mode = 1
@@ -13,9 +13,14 @@ tile = NodePath("autotile")
 
 [node name="autotile" parent="." instance=ExtResource("4_rcvlu")]
 
-[node name="debugger" parent="." instance=ExtResource("4_tuleo")]
-
 [node name="in_game_HUD" parent="." instance=ExtResource("4_ece4y")]
 
 [node name="spawns" type="Node" parent="."]
 script = ExtResource("5_vrrx8")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("6_ri64i")

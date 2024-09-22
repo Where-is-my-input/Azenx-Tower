@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var aim: ColorRect = $aim
 @onready var asp_attack: AudioStreamPlayer2D = $aspAttack
 @onready var asp_spell: AudioStreamPlayer2D = $aspSpell
+@onready var asp_level_up: AudioStreamPlayer2D = $aspLevelUp
 
 signal dead
 signal collectItem
@@ -249,6 +250,7 @@ func calculateXpNeeded():
 
 func levelUp():
 	if xp >= xpNeeded:
+		asp_level_up.play()
 		level += 1
 		Global.damageLog.emit("Leveled up to level " + str(level))
 		Global.damageAnimLog.emit(2, "Level up!", global_position)

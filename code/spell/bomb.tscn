@@ -1,11 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://ddmo8fvsadupj"]
+[gd_scene load_steps=6 format=3 uid="uid://ddmo8fvsadupj"]
 
-[ext_resource type="Texture2D" uid="uid://fo236cbmquq2" path="res://icon.svg" id="1_i6mha"]
 [ext_resource type="Script" path="res://code/spell/bomb.gd" id="1_vry3d"]
+[ext_resource type="Texture2D" uid="uid://ch7aynwcuwnha" path="res://assets/sprites/items/16_bit_bomb2.png" id="2_l70ya"]
+[ext_resource type="Texture2D" uid="uid://cxhj7pah5y3ws" path="res://assets/sprites/items/16bit_bomb1.png" id="3_f75nh"]
+[ext_resource type="Texture2D" uid="uid://cxc5ib0lud5g8" path="res://assets/sprites/items/16_bit_bomb3.png" id="4_m5oc1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ockw8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_l70ya")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_f75nh")
+}],
+"loop": true,
+"name": &"2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_m5oc1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="bomb" type="Node2D"]
 script = ExtResource("1_vry3d")
 
-[node name="sprBomb" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_i6mha")
+[node name="asBomb" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_ockw8")
+animation = &"2"

@@ -40,12 +40,13 @@ func _ready() -> void:
 	soundTrack = ASP_GLOBAL.instantiate()
 	add_child(soundTrack)
 	instantiatePlayer()
-	RenderingServer.set_default_clear_color(Color.DARK_SLATE_GRAY)#DARK_SLATE_GRAY
+	RenderingServer.set_default_clear_color(Color.BLACK)#DARK_SLATE_GRAY
 
 func healPlayer():
 	player.fullHeal()
 
 func _input(event: InputEvent) -> void:
+	return
 	if event.is_action_pressed("reset"):
 		instantiatePlayer()
 		get_tree().change_scene_to_file("res://code/main.tscn")
@@ -67,6 +68,9 @@ func primeTest():
 	return true
 
 func changeFloor():
+	if floor % 10 == 0: 
+		get_tree().change_scene_to_file("res://code/boss/boss_phase_one.tscn")
+		return
 	if primeTest():
 		get_tree().change_scene_to_file("res://code/world/camp_fire.tscn")
 	else:

@@ -72,6 +72,7 @@ func floorGenerated():
 	Global.player.get_child(0).global_position = playerSpawnPos if playerSpawnPos != null else spawnFailSafePos
 	Global.player.get_child(0).connect("dead", gameOver)
 	Global.player.enterFloor()
+	Global.player.setCameraOffset(0)
 	add_child(Global.player)
 	forceSpawn()
 

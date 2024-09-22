@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://bnrvsud3xk5y7"]
+[gd_scene load_steps=15 format=3 uid="uid://bnrvsud3xk5y7"]
 
 [ext_resource type="Script" path="res://code/HUD/options.gd" id="1_m3uou"]
 [ext_resource type="AudioStream" uid="uid://ddcw3xxey6gxd" path="res://assets/swishes/swish-1.wav" id="2_7ghcn"]
+[ext_resource type="Texture2D" uid="uid://b3fx8j4wl8d8d" path="res://assets/backgrounds/forge.png" id="2_nsqp6"]
 [ext_resource type="AudioStream" uid="uid://cxdmc3rtyaxc5" path="res://assets/swishes/swish-2.wav" id="3_xivc1"]
 [ext_resource type="AudioStream" uid="uid://dugjmjv7a553c" path="res://assets/swishes/swish-3.wav" id="4_5jyph"]
 [ext_resource type="AudioStream" uid="uid://xqn5jp3ig3d7" path="res://assets/swishes/swish-4.wav" id="5_yom6r"]
@@ -36,6 +37,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_m3uou")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_nsqp6")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

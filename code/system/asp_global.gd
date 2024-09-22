@@ -10,6 +10,7 @@ const BGM_GAMMA = preload("res://assets/soundtracks/BGM_Gamma.mp3")
 const BGM_MENU = preload("res://assets/soundtracks/BGM_Menu.mp3")
 const BGM_OMEGA = preload("res://assets/soundtracks/BGM_Omega.mp3")
 const VIKTOR_KRAUS___APPROACHING_THE_TOWER = preload("res://assets/soundtracks/Viktor Kraus - Approaching the Tower.mp3")
+const HIGHLYVOLCANICSTAKES = preload("res://assets/soundtracks/boss/highlyvolcanicstakes.ogg")
 
 func playRandom():
 	menu = false
@@ -35,6 +36,9 @@ func playMainMenu():
 	stream = BGM_MENU
 	play()
 
+func playBoss():
+	stream = HIGHLYVOLCANICSTAKES
+	play()
 
 func _on_finished() -> void:
 	if menu:

@@ -3,6 +3,7 @@ extends Node2D
 @export var direction:Vector2 = Vector2(1,0)
 @export var speed:Vector2 = Vector2(16, 16)
 @export var damage:int = 1
+var manaDamage = 0
 @export var spellName = "Fireball"
 @onready var spr_spell: Sprite2D = $hitbox/sprSpell
 @onready var asp_spell: AudioStreamPlayer2D = $aspSpell
